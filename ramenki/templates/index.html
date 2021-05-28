@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    {% load cropping %}
+      <div class="page-main page-main--index">
+        <div class="main-slider__wrapper slider__wrapper">
+          <div class="slider main-slider">
+              {% for item in slider_items  %}
+            <div class="main-slider__item">
+              <div class="main-slider__item-inner">
+                <div class="title  title--rich">
+                  <h2>{{ item.header }}</h2>
+                </div>
+                {% if item.body %}<div class="main-slider__text">{{ item.body }}</div>{% endif %}
+                <div class="main-slider__tagline">Сеть клубов Карате-до
+                  и Тхэквондо</div><a href="{% url 'contacts' %}" class="btn  btn--rich main-slider__enroll">Записаться в секцию</a>
+              </div>
+              <div class="main-slider__img">
+                <picture>
+                  <source srcset="{% cropped_thumbnail item 'crop_mobile' %}" media="(max-width: 767px)" />
+                  <source srcset="{% cropped_thumbnail item 'crop_tablet' %}" media="(max-width: 1023px)" />
+                  <source srcset="{% cropped_thumbnail item 'crop_index' %}" media="(max-width: 1279px)" />
+                  <source srcset="{% cropped_thumbnail item 'crop_wide' %}" /><img src="{% cropped_thumbnail item 'crop_index' %}" alt="" /></picture>
+              </div>
+            </div>
+              {% endfor %}
+          </div>
+        </div>
+        <section class="news-widget page-card">
+          <div class="news-widget__title-add">Новости</div>
+          <div class="news-widget__title">Жизнь клуба</div>
+          <ul class="news-widget__list">
+              {% for article in news %}
+            <li class="news-widget__item news-item{% if forloop.counter == 1 %} news-widget__item--wimg{% endif %}"><a class="news-item__inner" href="{% url 'news:article' article.url %}">
+                <div class="news-item__date">{{ article.date_string }}</div>
+                <div class="news-item__title title-rich"><span>{{ article.title }}</span></div>
+                {% if forloop.counter == 1 %}
+                    <div class="news-item__img">
+                          <picture><source src="{% if article.has_image %}{% cropped_thumbnail article "thumbnail_size" %}{% else %}{% static 'img/content/cup-mobile.jpg' %}{% endif %}" media="(max-width: 768px)"><img src="{% if article.has_image %}{% cropped_thumbnail article "thumbnail_size" %}{% else %}{% static 'img/content/cup-mobile.jpg' %}{% endif %}" alt=""></picture>
+                    </div>
+                {% endif %}
+              </a></li>
+              {% endfor %}
+          </ul><a class="btn  btn--plain news-widget__show-all" href="{% url 'news:news' %}">Все новости</a>
+        </section>
+        <div class="reviews-slider__wrapper slider__wrapper">
+          <div class="slider reviews-slider">
+              {% for item in mini_slider_items %}
+            <div class="reviews-slider__item page-card">
+              <div class="reviews-slider__item-inner">
+                <div class="reviews-slider__cite"><span>{{ item.quote }}</span></div>
+                <div class="reviews-slider__name">{% if item.author %}{{ item.author }}{% endif %}</div>
+                <div class="reviews-slider__desc">{% if item.description %}{{ item.description }}{% endif %}</div>
+                <div class="reviews-slider__img">
+                    {% if item.image %}<picture>
+                        <source srcset="{% cropped_thumbnail item 'crop_mini' %}" alt="Автор" media="(max-width: 1599px)">
+                        <source srcset="{% cropped_thumbnail item 'crop_normal' %}" alt="Автор"><img src="{% cropped_thumbnail item 'crop_normal' %}">
+                    </picture>{% endif %}
+                </div>
+              </div>
+            </div>
+              {% endfor %}
+          </div>
+        </div>
+        <section class="preview page-card">
+          <div class="preview__title">О клубе</div>
+          <div class="preview__text">
+            <p>Вот уже более 25 лет спортивно-профессиональный клуб «Раменки» проповедует здоровый образ жизни через изучение Сетокан Каратэ-До. На сегодняшний наш Клуб один самых больших в г. Москве.</p>
+            <p>Идея создания школы каратэ родилась в 1987 году, в то время когда занятия данным видом спорта преследовались статьей уголовного кодекса РСФСР. Основатель клуба "РАМЕНКИ" чемпион СССР по каратэ (1983г.)</p>
+          </div><a class="btn  btn--plain preview__more" href="{% url 'about:main' %}">Подробнее</a>
+        </section>
+
+
+
+        <div class="page-card thumb-card thumb-card--video thumb-card--media">
+            {% if media.video %}
+                  <div class="thumb-card thumb-card--video thumb-card--media page-card">
+                    <a class="thumb-card__inner" data-sub-html="#video{{ media.id }}-title" href="{{ media.link }}">
+                      <div class="thumb-card__content">
+                        <div class="thumb-card__title-add">{{ media.category.name }}</div>
+                        <div class="thumb-card__title"><span>{{ media.name }}</span></div>
+                      </div>
+                      <div class="thumb-card__img"><img src="{% if media.has_thumbnail %}{% if media.use_raw_thumbnail %}{{ media.thumbnail.url }}{% else %}{% cropped_thumbnail item "crop" %}{% endif %}{% else %}{{ media.youtube_thumbnail }}{% endif %}" alt="" /></div>
+                      <div class="thumb-card__sub-html" id="video{{ media.id }}-title">
+                        <p>{% if media.has_description %}{{ media.description| safe }}{% else %}{{ media.name }}{% endif %}</p>
+                      </div>
+                    </a>
+                  </div>
+              {% else %}
+                <a class="thumb-card__inner" href="#">
+                  <div class="thumb-card__content">
+                    <div class="thumb-card__title-add">Медиа</div>
+                    <div class="thumb-card__title"><span>{{ media.name }}</span></div>
+                    <ul class="gallery visuallyhidden">
+                        {% for photo in media.photo_set.all %}
+                            <li href="{{ photo.image.url }}" title="{{ photo.get_name }}"></li>
+                        {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="thumb-card__img"><img src="{% if media.has_thumbnail %}{% if media.use_raw_thumbnail %}{{ media.thumbnail.url }}{% else %}{% cropped_thumbnail item "crop" %}{% endif %}{% else %}{% static media.default_thumb %}{% endif %}" alt="" /></div>
+                </a>
+              {% endif %}
+        </div>
+
+        <div class="offer-card  offer-card--attest page-card">
+          <div class="offer-card__inner">
+            <div class="offer-card__title">Программа аттестации</div>
+            <div class="offer-card__text">Программа аттестации Спорт клуба Раменки</div>
+          </div><a class="btn  btn--arrow-long-right offer-card__go" href="{% url 'karate:static-page' 'attestation' %}"></a>
+        </div>
+        <div class="note page-card">
+          <div class="note__title">Школа каратэ и тхэквондо СПК «Раменки»</div>
+          <div class="note__lead">Найти путь к здоровью и долголетию можно посредством изучения Сетокан Каратэ-До и тхэквондо</div>
+          <div class="note__text">
+            <p>Далеко не все спортивные школы и секции каратэ Шотокан и тхэквондо в Москве и МО способны принять такое количество учеников, как мы. Но мало принять – надо уделить достойное внимание, обучить всем азам и помогать в развитии.</p>
+            <p>На сегодняшний день у нас занимаются более 1000 человек, среди которых есть и взрослые, и совсем малыши (начиная с 5 лет, мы принимаем всех желающих).</p>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block additional %}
+  <div class="modal" id="modal-user" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-user-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="user-modal">
+            <div class="user-modal__title">Личный кабинет</div>
+            <form class="user-form">
+              <div class="user-modal__name"><label class="field-text"><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="Александр" name="first-name" disabled="true"/></span></label><label class="field-text"><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="Кимович" name="fathers-name" disabled="true"/></span></label><label class="field-text"><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="Рудь" name="second-name" disabled="true"/></span></label><button class="btn  btn--edit btn--edit-modal"><span>&#x25CF;</span></button></div>
+              <div class="user-modal__main">
+                <div class="user-modal__col">
+                  <div class="user-modal__img"><img src="https://placekitten.com/288/288" alt="" /><button class="btn  btn--edit btn--edit-img"><span>&#x25CF;</span></button><input type="file" id="user-img-input" name="img" hidden>
+                    <input type="checkbox" id="user-img-delete" hidden></div>
+                </div>
+                <div class="user-modal__col">
+                  <div class="user-modal__data">
+                    <div class="user-modal__data-item"><label class="field-text"><span class="field-text__name">Город</span><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="Санкт-петербург" name="city" disabled="true"/></span></label></div>
+                    <div class="user-modal__data-item"><label class="field-text"><span class="field-text__name">Дата рождения:</span><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="25 мая 1989" name="city" disabled="true"/></span></label></div>
+                    <div class="user-modal__data-item"><label class="field-text"><span class="field-text__name">Вес:</span><span class="field-text__input-wrap"><input class="field-text__input" type="text" value="54" name="city" disabled="true"/></span></label></div>
+                  </div>
+                </div>
+                <div class="user-modal__col"></div>
+                <div class="user-modal__col"></div>
+              </div><input id="user-edit" type="checkbox" hidden="hidden" /><input id="user-print" type="checkbox" hidden="hidden" /><input id="user-share" type="checkbox" hidden="hidden" />
+              <div class="user-modal__templates">
+                <div class="context context--img  context--light" id="user-img-nav"><label class="btn btn--context" for="user-img-input">Загрузить</label><label class="btn btn--context btn--delete" for="user-img-delete">Удалить</label></div>
+                <div class="context context--modal  context--dark" id="user-nav"><label class="btn btn--context" for="user-edit">Редактировать</label><label class="btn btn--context btn--delete" for="user-print">Распечатать</label><label class="btn btn--context btn--delete" for="user-share">Поделиться</label></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

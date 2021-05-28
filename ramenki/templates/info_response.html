@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ceo_tags %}
+
+{% block title %}
+<title>{% if header %}{% get_title template_name header| add:"Сброс пароля" %}{% elif title %}{% get_title template_name title| add:"Сброс пароля" %}{% else %}{% get_title template_name message| add:"Сброс пароля" %}{% endif %}</title>
+{% endblock %}
+
+{% block main %}
+
+    <style>
+        .page-card__content {
+            display: flex;
+            justify-content: center;
+        }
+        .page-card__inner {
+            max-width: 500px;
+        }
+        .page-card__inner{
+            font-size: 16px;
+            text-transform: uppercase;
+            text-align: center;
+            font-family: "GothamPro", -apple-system, BlinkMacSystemFont, "Ubuntu", "Droid Sans", "Helvetica Neue", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        .page-card__inner a {
+            font-size: 14px;
+        }
+    </style>
+
+    <div class="page-main page-main--personal">
+
+    <section class="page-card">
+
+        {% if title or header %}<div class="page-title">
+            {% if title %}<div class="title-add"><span>{{ title }}</span></div>{% endif %}
+            {% if header %}<div class="title  title--rich">
+                <h1>{{ header }}</h1>
+            </div>{% endif %}
+        </div>{% endif %}
+
+        <div class="page-card page-card__content">
+
+            <div class="page-card__inner">
+                <p>{{ message| safe }}</p>
+                <a class="btn btn--plain" href="{% url 'index' %}">Главная</a>
+                {% if profile_link %}<a class="btn btn--plain" href="{% url 'auth:profile' %}">Профиль</a>{% endif %}
+                {% if edit_profile_link %}<a class="btn btn--plain" href="{% url 'auth:profile-edit' %}">Редактирование профиля</a>{% endif %}
+                {% if login_link %}<a class="btn btn--plain" href="{% url 'auth:login' %}">Вход</a>{% endif %}
+            </div>
+
+        </div>
+
+    </section>
+
+    </div>
+
+{% endblock %}

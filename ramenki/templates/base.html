@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="page no-js" lang="ru">
+
+<head>
+    {% load static %}
+    {% load ceo_tags %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="format-detection" content="date=no">
+  <meta name="format-detection" content="address=no">
+  <meta name="format-detection" content="email=no">
+  <meta content="notranslate" name="google">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <style>
+        @media screen and (min-width: 1920px){
+            .login-reg-divisor {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                margin: 0!important;
+                padding-left: 30px;
+            }
+        }
+    </style>
+
+{% block title %}
+<title>{% get_title template_name %}</title>
+{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{% get_meta_description template_name %}"/>{% endblock %}
+{% block meta_keywords %}<meta name="keywords" content="{% get_meta_keywords template_name %}"/>{% endblock %}
+{% block meta_robots %}<meta name="robots" content="{% get_meta_robots template_name %}"/>{% endblock %}
+
+{% block header_links %}
+{% endblock %}
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script>
+document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+document.createElement( "picture" );
+</script><script type="text/javascript" src="{% static 'js/picturefill.min.js' %}" async></script>
+</head>
+
+<body><noscript>У вас отключен JavaScript. Это пугает.</noscript>
+  <div class="off-canvas" id="off-canvas">
+    <aside class="off-canvas__aside" role="complementary" aria-label="Меню">
+      <div class="off-aside">
+        <div class="off-aside__inner">
+          <div class="off-aside__top"><a class="logo" href="/"><img src="{% static 'img/logo-white.png' %}" alt="Logo" width="112" height="42" /></a><a class="off-aside__close btn btn--close" data-toggle="off-canvas"><span>Закрыть</span></a></div>
+          <nav class="main-nav main-nav--aside" id="nav-aside">
+            <ul class="main-nav__list">
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'about:main' %}">О Клубе</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'news:news' %}">Новости</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'karate:main' %}">Карате-до</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'taekwondo:main' %}">Тхэквондо</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'mediacontent:main' %}">Медиа</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'contacts' %}">Контакты</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </aside>
+    <div class="off-canvas__overlay" data-toggle="off-canvas"></div>
+  </div>
+  <div class="page__inner">
+    <div class="page__content">
+      <header class="page-header" role="banner">
+        <div class="page-header__inner"><a class="logo  logo--header" href="/"><img src="{% static 'img/logo-white.png' %}" alt="Logo" width="112" height="42"></a><button class="burger burger--header" aria-label="Открыть меню" data-toggle="off-canvas"><span>Открыть меню</span></button>
+          <nav class="main-nav main-nav--top" id="nav-top">
+            <ul class="main-nav__list">
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'about:main' %}">О Клубе</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'news:news' %}">Новости</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'karate:main' %}">Карате-до</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'taekwondo:main' %}">Тхэквондо</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'mediacontent:main' %}">Медиа</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'contacts' %}">Контакты</a></li>
+            </ul>
+          </nav><a class="phone  phone--header" href="tel:{{ phone }}">
+            <div class="phone__inner">
+              <div class="phone__number">{{ phone }}</div>
+              <div class="phone__note">{{ phone_city }}</div>
+            </div>
+          </a>
+        <!-- Edited block -->
+            <style>.mb-4px { margin: 0 0 4px 0 }</style>
+          <div class="user {% if not user.is_staff and user.is_authenticated %}mb-4px{% else %}user--header{% endif %}">
+              {% if user.is_authenticated %}
+                  {% load cropping %}
+                <div style="text-align: right" class="user__logged-in">
+                    <a href="{% url 'auth:profile' %}" style="display: flex; text-decoration: none;">
+                        <div>
+                            <span class="user__greeting mb-4px">{% if user.is_staff %}Вы вошли как сотрудник{% else %}Приветствуем, боец!{% endif %}</span><br>
+                            <span class="user__name">{{ user.profile.name }}</span>
+                        </div>
+                        <div class="user__pic">
+                          <img src="{% if user.profile.use_social_photo and user.profile.social_avatar %}{{ user.profile.social_avatar }}{% else %}{% cropped_thumbnail user.profile 'avatar_cut' %}{% endif %}"  alt=""/>
+                        </div>
+                    </a>
+                </div>
+              {% else %}
+                <a class="user__enter" href="{% url 'auth:login' %}"><span><span class="login-reg-divisor">Вход</span><br>Регистрация</span></a>
+              {% endif %}
+          </div>
+        <!-- -->
+        </div>
+      </header>
+
+          {% block main %}
+
+      <div class="page-main page-main--index">
+        <div class="main-slider__wrapper slider__wrapper">
+          <div class="slider main-slider">
+            <div class="main-slider__item">
+              <div class="main-slider__item-inner">
+                <div class="title  title--rich">
+                  <h2>высокoквалифицированный
+                    инструкторский состав</h2>
+                </div>
+                <div class="main-slider__text">На сегодняшний наш Клуб один самых больших в г. Москве.</div>
+                <div class="main-slider__tagline">Сеть клубов Карате-до
+                  и Тхэквондо</div><button class="btn  btn--rich main-slider__enroll">Записаться в секцию</button><a class="main-slider__programm btn btn--plain">Программа аттестации</a>
+              </div>
+              <div class="main-slider__img">
+                <picture>
+                  <source srcset="{% static 'img/content/staff_mobile.jpg' %}" media="(max-width: 767px)" />
+                  <source srcset="{% static 'img/content/staff_tablet.jpg' %}" media="(max-width: 1023px)" />
+                  <source srcset="{% static 'img/content/staff_index.jpg' %}" media="(max-width: 1279px)" />
+                  <source srcset="{% static 'img/content/staff_wide.jpg' %}" /><img src="{% static 'img/content/staff_index.jpg' %}" alt="" /></picture>
+              </div>
+            </div>
+            <div class="main-slider__item">
+              <div class="main-slider__item-inner">
+                <div class="title  title--rich">
+                  <h2>высокoквалифицированный
+                    инструкторский состав</h2>
+                </div>
+                <div class="main-slider__text">На сегодняшний наш Клуб один самых больших в г. Москве.</div>
+                <div class="main-slider__tagline">Сеть клубов Карате-до
+                  и Тхэквондо</div><button class="btn  btn--rich main-slider__enroll">Записаться в секцию</button><a class="main-slider__programm btn btn--plain">Программа аттестации</a>
+              </div>
+              <div class="main-slider__img">
+                <picture>
+                  <source srcset="{% static 'img/content/staff_mobile.jpg' %}" media="(max-width: 767px)" />
+                  <source srcset="{% static 'img/content/staff_tablet.jpg' %}" media="(max-width: 1023px)" />
+                  <source srcset="{% static 'img/content/staff_index.jpg' %}" media="(max-width: 1279px)" />
+                  <source srcset="{% static 'img/content/staff_wide.jpg' %}" /><img src="{% static 'img/content/staff_index.jpg' %}" alt="" /></picture>
+              </div>
+            </div>
+            <div class="main-slider__item">
+              <div class="main-slider__item-inner">
+                <div class="title  title--rich">
+                  <h2>высокoквалифицированный
+                    инструкторский состав</h2>
+                </div>
+                <div class="main-slider__text">На сегодняшний наш Клуб один самых больших в г. Москве.</div>
+                <div class="main-slider__tagline">Сеть клубов Карате-до
+                  и Тхэквондо</div><button class="btn  btn--rich main-slider__enroll">Записаться в секцию</button><a class="main-slider__programm btn btn--plain">Программа аттестации</a>
+              </div>
+              <div class="main-slider__img">
+                <picture>
+                  <source srcset="{% static 'img/content/staff_mobile.jpg' %}" media="(max-width: 767px)" />
+                  <source srcset="{% static 'img/content/staff_tablet.jpg' %}" media="(max-width: 1023px)" />
+                  <source srcset="{% static 'img/content/staff_index.jpg' %}" media="(max-width: 1279px)" />
+                  <source srcset="{% static 'img/content/staff_wide.jpg' %}" /><img src="{% static 'img/content/staff_index.jpg' %}" alt="" /></picture>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="news-widget page-card">
+          <div class="news-widget__title-add">Новости</div>
+          <div class="news-widget__title">Жизнь клуба</div>
+          <ul class="news-widget__list">
+            <li class="news-widget__item news-widget__item--wimg news-item"><a class="news-item__inner" href="#">
+                <div class="news-item__date">3 часа назад</div>
+                <div class="news-item__title title-rich"><span>Кубок Москвы 2018</span></div>
+                <div class="news-item__img">
+                  <picture>
+                    <source src="{% static 'img/content/cup-mobile.jpg' %}" media="(max-width: 768px)"><img src="{% static 'img/content/cup-mobile.jpg' %}" alt=""></picture>
+                </div>
+              </a></li>
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="#">
+                <div class="news-item__date">3 часа назад</div>
+                <div class="news-item__title">Самбо исполнилось 80 лет!</div>
+              </a></li>
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="#">
+                <div class="news-item__date">12 декабря</div>
+                <div class="news-item__title">Турнир по каратэ на кубок международных ассоциации ветеранов подразделения антитеррора "Альфа"</div>
+              </a></li>
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="#">
+                <div class="news-item__date">22 Ноября</div>
+                <div class="news-item__title">В Москве прошел семинар по каратэ Рафаэля Агаева</div>
+              </a></li>
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="#">
+                <div class="news-item__date">22 Ноября</div>
+                <div class="news-item__title">В Зеленограде прошел Evolution Cup</div>
+              </a></li>
+          </ul><a class="btn  btn--plain news-widget__show-all" href="#">Все новости</a>
+        </section>
+        <div class="reviews-slider__wrapper slider__wrapper">
+          <div class="slider reviews-slider">
+            <div class="reviews-slider__item page-card">
+              <div class="reviews-slider__item-inner">
+                <div class="reviews-slider__cite"><span>Если Вы хотите заниматься настоящим, японским Каратэ, то это Раменки. У меня много друзей в этом клубе, я люблю сюда приезжать</span></div>
+                <div class="reviews-slider__name">Сергей Бадюк</div>
+                <div class="reviews-slider__desc">Российский спортсмен, актёр и общественный деятель.</div>
+                <div class="reviews-slider__img"><img src="{% static 'img/content/baduk.png' %}" alt="Автор" /></div>
+              </div>
+            </div>
+            <div class="reviews-slider__item page-card">
+              <div class="reviews-slider__item-inner">
+                <div class="reviews-slider__cite"><span> 2 Если Вы хотите заниматься настоящим, японским Каратэ, то это Раменки. У меня много друзей в этом клубе, я люблю сюда приезжать</span></div>
+                <div class="reviews-slider__name">Сергей Бадюк</div>
+                <div class="reviews-slider__desc">Российский спортсмен, актёр и общественный деятель.</div>
+                <div class="reviews-slider__img"><img src="{% static 'img/content/baduk.png' %}" alt="Автор" /></div>
+              </div>
+            </div>
+            <div class="reviews-slider__item page-card">
+              <div class="reviews-slider__item-inner">
+                <div class="reviews-slider__cite"><span>3 Если Вы хотите заниматься настоящим, японским Каратэ, то это Раменки. У меня много друзей в этом клубе, я люблю сюда приезжать</span></div>
+                <div class="reviews-slider__name">Сергей Бадюк</div>
+                <div class="reviews-slider__desc">Российский спортсмен, актёр и общественный деятель.</div>
+                <div class="reviews-slider__img"><img src="{% static 'img/content/baduk.png' %}" alt="Автор" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="preview page-card">
+          <div class="preview__title">О клубе</div>
+          <div class="preview__text">
+            <p>Вот уже более 25 лет спортивно-профессиональный клуб «Раменки» проповедует здоровый образ жизни через изучение Сетокан Каратэ-До. На сегодняшний наш Клуб один самых больших в г. Москве.</p>
+            <p>Идея создания школы каратэ родилась в 1987 году, в то время когда занятия данным видом спорта преследовались статьей уголовного кодекса РСФСР. Основатель клуба "РАМЕНКИ" чемпион СССР по каратэ (1983г.)</p>
+          </div><a class="btn  btn--plain preview__more" href="#">Подробнее</a>
+        </section>
+        <div class="page-card thumb-card thumb-card--video thumb-card--media"><a class="thumb-card__inner" data-poster="img/content/media-thumb-01.png" data-html="#video2">
+            <div class="thumb-card__content">
+              <div class="thumb-card__title-add">Медиа</div>
+              <div class="thumb-card__title"><span>18-23 PKF Senior Championships, Panama (Panama)</span></div>
+            </div>
+            <div class="thumb-card__img"><img src="{% static 'img/content/media-thumb-01.png' %}" alt="" /></div>
+            <div class="thumb-card__video" id="video2"><video class="lg-video-object lg-html5" controls="controls" preload="none">
+                <source src="{% static 'video/video1.mp4' %}" type="video/mp4" /></video></div>
+          </a></div>
+        <div class="offer-card  offer-card--attest page-card">
+          <div class="offer-card__inner">
+            <div class="offer-card__title">Программа аттестации</div>
+            <div class="offer-card__text">Программа аттестации Спорт клуба Раменки</div>
+          </div><a class="btn  btn--arrow-long-right offer-card__go" href="#"></a>
+        </div>
+        <div class="note page-card">
+          <div class="note__title">Школа каратэ и тхэквондо СПК «Раменки»</div>
+          <div class="note__lead">Найти путь к здоровью и долголетию можно посредством изучения Сетокан Каратэ-До и тхэквондо</div>
+          <div class="note__text">
+            <p>Далеко не все спортивные школы и секции каратэ Шотокан и тхэквондо в Москве и МО способны принять такое количество учеников, как мы. Но мало принять – надо уделить достойное внимание, обучить всем азам и помогать в развитии.</p>
+            <p>На сегодняшний день у нас занимаются более 1000 человек, среди которых есть и взрослые, и совсем малыши (начиная с 5 лет, мы принимаем всех желающих).</p>
+          </div>
+        </div>
+      </div>
+
+          {% endblock %}
+
+    </div>
+    <div class="page__footer-wrapper">
+      <footer class="page-footer" role="contentinfo">
+        <div class="page-footer__inner">
+          <nav class="main-nav main-nav--footer" id="nav-footer">
+            <ul class="main-nav__list">
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'about:main' %}">О Клубе</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'news:news' %}">Новости</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'karate:main' %}">Карате-до</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'taekwondo:main' %}">Тхэквондо</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'mediacontent:main' %}">Медиа</a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="{% url 'contacts' %}">Контакты</a></li>
+            </ul>
+          </nav>
+          <div class="partners-main  partners-main--footer">
+            <div class="partners-main__item"><span class="partners-main__link">
+                <div class="partners-main__img"><img src="{% static 'img/logo-combatmarkt.png' %}" /></div>
+                <div class="partners-main__img"><img src="{% static 'img/logo-adidas.png' %}" /></div><span>Official martialarts &&nbsp;boxing distributor</span>
+              </span></div>
+          </div>
+          <div class="page-footer__copyright"><span>©1989 — 2020 Спортклуб «Раменки»</span></div><a class="phone  phone--footer" href="tel:{{ phone }}">
+            <div class="phone__inner">
+              <div class="phone__number">{{ phone }}</div>
+              <div class="phone__note">{{ phone_city }}</div>
+            </div>
+          </a>
+          <ul class="social  social--footer">
+            <div class="social__inner">
+              <li class="social__link-wrap  social__link-wrap--fb"><a class="social__link" href="{{ facebook_link }}"><span>Фейсбук</span></a></li>
+              <li class="social__link-wrap  social__link-wrap--vk"><a class="social__link" href="{{ vk_link }}"><span>В контакте</span></a></li>
+              <li class="social__link-wrap  social__link-wrap--youtube"><a class="social__link" href="{{ youtube_link }}"><span>Ютуб</span></a></li>
+              <li class="social__link-wrap  social__link-wrap--insta"><a class="social__link" href="{{ instagram_link }}"><span>Инстаграм</span></a></li>
+            </div>
+          </ul>
+          <div class="mail-link mail-link--footer"><a href="mailto:{{ email }}">Написать письмо</a></div><a class="page-footer__madeby" href="https://lab01.ru" target="_blank"><span>Сделано в</span></a>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="{% static 'js/bundle.js' %}"></script>
+{% block additional %}
+{% endblock %}
+</body>
+
+</html>

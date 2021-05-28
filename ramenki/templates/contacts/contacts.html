@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_links %}
+    <script type="text/javascript" src="{% static 'js/picturefill.min.js' %}" async></script>
+    {% if not request.user_agent.is_mobile %}
+        <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?apikey=d25f9b8a-94ad-446e-b48e-0fb15d01bc70&amp;lang=ru_RU"></script>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+  <div class="page-main page-main--about page-main--contacts">
+    <section class="page-card article about">
+      <div class="article__header contacts tabs">
+        <div class="article__header-inner">
+          <div class="page-title article__title">
+            <div class="title-add"><span>Раменки</span></div>
+            <div class="title  title--rich">
+              <h1>Контакты</h1>
+            </div>
+          </div>
+          <div class="about-nav  about-nav--contacts" id="about-nav">
+            <div class="about-nav__inner">
+              <ul class="inner-nav inner-nav__list">
+                <li class="inner-nav__item tabs__link-wrap tabs__link-wrap--active"><a class="inner-nav__link" href="#tab99" data-toggle="tab">Все</a></li>
+                  {% for city in cities %}
+                <li class="inner-nav__item tabs__link-wrap"><a class="inner-nav__link" href="#tab{{ city.id }}" data-toggle="tab">{{ city.name }}</a></li>
+                  {% endfor %}
+              </ul>
+              <ul class="social  social--about-menu">
+                <div class="social__inner">
+                  <li class="social__link-wrap  social__link-wrap--fb-black"><a class="social__link" href="{{ facebook_link }}"><span>Фейсбук</span></a></li>
+                  <li class="social__link-wrap  social__link-wrap--vk-black"><a class="social__link" href="{{ vk_link }}"><span>В контакте</span></a></li>
+                  <li class="social__link-wrap  social__link-wrap--insta-black"><a class="social__link" href="{{ instagram_link }}"><span>Инстаграм</span></a></li>
+                </div>
+              </ul>
+            </div>
+          </div>
+
+
+
+          <div class="tabs__content-item {% if city_id %}{% if city_id == 99 %}tabs__content-item--active{% endif %}{% else %}tabs__content-item--active{% endif %}" id="tab99">
+            <div class="contacts__map map" id="map-99"></div>
+            <div class="about-nav  about-nav--contacts-submenu contacts__submenu" id="about-nav">
+              <div class="about-nav__inner">
+                <ul class="inner-nav inner-nav__list">
+                    {% for branch in all_branches %}
+                  <li class="inner-nav__item"><a class="inner-nav__link" href="" data-target="address-99_{{ branch.id }}">{{ branch.title }}</a></li>
+                    {% endfor %}
+                </ul>
+              </div>
+              <div class="about-nav__bottom">
+                <div class="contacts__caption"> Сеть клубов Карате-До</div>
+                <div class="contacts__phone">{{ phone }}</div>
+                <div class="contacts__location">{{ phone_city }}</div>
+                <ul class="social  social--contacts">
+                  <div class="social__inner">
+                    <li class="social__link-wrap  social__link-wrap--fb-black"><a class="social__link" href="{{ facebook_link }}"><span>Фейсбук</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--vk-black"><a class="social__link" href="{{ vk_link }}"><span>В контакте</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--youtube-black"><a class="social__link" href="{{ youtube_link }}"><span>Ютуб</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--insta-black"><a class="social__link" href="{{ instagram_link }}"><span>Инстаграм</span></a></li>
+                  </div>
+                </ul>
+              </div>
+
+                {% for branch in all_branches %}
+              <div class="address {% if branch_id == branch.id %}address--open{% endif %}" id="address-99_{{ branch.id }}">
+                <div class="address__col">
+                  <div class="address__info">
+                    <div class="address__name">{{ branch.title }}</div>
+                    <div class="address__text">{{ branch.address }}</div>
+                    {% if branch.description %}<div class="address__description">{{ branch.description }}</div>{% endif %}
+                    {% if branch.metro %}<div class="address__metro"><span>Метро</span> {{ branch.metro }}</div>{% endif %}
+                    {% if branch.phone %}<div class="address__phone">{{ branch.phone }}</div>{% endif %}
+                    {% if branch.website %}<div class="address__website"><a target="_blank" href="{{ branch.website_link }}">Сайт филиала</a></div>{% endif %}
+                  </div>
+                  <div class="address__cards">
+                      {% for person in branch.instructors|slice:":2" %}
+                        <div class="person  person--address">
+                          <div class="person__inner">
+                            <div class="person__header">
+                              <div class="person__img"><img src="{{ person.photo.url }}" alt="{{ person.name }}"></div>
+                              <div class="person__caption">
+                                <div class="person__name">{{ person.name }}</div>
+                                <div class="person__position">{{ person.short_description }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      <a href="{% url 'about:about-instructors' %}" class="btn  btn--plain address__show-all">Показать всех</a>
+                  </div>
+                </div>
+                <form method="POST" class="address__col">
+                    {% csrf_token %}
+                  <div class="feedback">
+                      {{ form.non_field_errors }}
+                      <style>.errorlist li { color: indianred}</style>
+                    <div class="feedback__title">Обратная связь</div>
+                      <label class="field-text  field-text--name"><span class="field-text__input-wrap">
+                          {{ form.name }}
+                      </span>{{ form.name.errors }}</label>
+                      <label class="field-text  field-text--email"><span class="field-text__input-wrap">
+                          {{ form.email }}
+                      </span>{{ form.email.errors }}</label>
+                      <label class="field-text  field-text--message"><span class="field-text__input-wrap">
+                          {{ form.message }}
+                      </span>{{ form.message.errors }}</label>
+                      <input type="hidden" name="city_id" id="id_city_id" value="99">
+                      <input type="hidden" name="branch_id" id="id_branch_id" value="{{ branch.id }}">
+{#                    <div class="field-checkbox">#}
+{#                      <div class="field-checkbox__input-wrap  field-checkbox__input-wrap--lg"><label class="field-checkbox__name"><input class="field-checkbox__input" type="checkbox" name="check0" /><span class="field-checkbox__name-text">Принимаю <a href='#'>правила обработки</a> персональных данных</span></label></div>#}
+{#                    </div>#}
+                    <button type="submit" class="btn  btn--rich address__sign-in">Записаться в секцию</button>
+                  </div>
+                  <div class="address__title">Сеть клубов Карате-до и Тхэквондо</div>
+                </form>
+                  <button class="btn address__close"></button>
+              </div>
+                {% endfor %}
+
+            </div>
+          </div>
+
+
+        {% for city in cities %}
+          <div class="tabs__content-item {% if city_id == city.id %}tabs__content-item--active{% endif %}" id="tab{{ city.id }}">
+            <div class="contacts__map map" id="map-{{ city.id|stringformat:"02d" }}"></div>
+            <div class="about-nav  about-nav--contacts-submenu contacts__submenu" id="about-nav">
+              <div class="about-nav__inner">
+                <ul class="inner-nav inner-nav__list">
+                    {% for branch in city.branch_set.all %}
+                  <li class="inner-nav__item"><a class="inner-nav__link" href="" data-target="address-{{ city.id }}_{{ branch.id }}">{{ branch.title }}</a></li>
+                    {% endfor %}
+                </ul>
+              </div>
+              <div class="about-nav__bottom">
+                <div class="contacts__caption"> Сеть клубов Карате-До</div>
+                <div class="contacts__phone">{{ phone }}</div>
+                <div class="contacts__location">{{ phone_city }}</div>
+                <ul class="social  social--contacts">
+                  <div class="social__inner">
+                    <li class="social__link-wrap  social__link-wrap--fb-black"><a class="social__link" href="{% if city.facebook_link %}{{ city.facebook_link }}{% else %}{{ YOUTUBE_LINK }}{% endif %}"><span>Фейсбук</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--vk-black"><a class="social__link" href="{% if city.vk_link %}{{ city.vk_link }}{% else %}{{ FACEBOOK_LINK }}{% endif %}"><span>В контакте</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--youtube-black"><a class="social__link" href="{% if city.youtube_link %}{{ city.youtube_link }}{% else %}{{ INSTAGRAM_LINK }}{% endif %}"><span>Ютуб</span></a></li>
+                    <li class="social__link-wrap  social__link-wrap--insta-black"><a class="social__link" href="{% if city.instagram_link %}{{ city.instagram_link }}{% else %}{{ VK_LINK }}{% endif %}"><span>Инстаграм</span></a></li>
+                  </div>
+                </ul>
+              </div>
+
+                {% for branch in city.branch_set.all %}
+              <div class="address {% if branch_id == branch.id %}address--open{% endif %}" id="address-{{ city.id }}_{{ branch.id }}">
+                <div class="address__col">
+                  <div class="address__info">
+                    <div class="address__name">{{ branch.title }}</div>
+                    <div class="address__text">{{ branch.address }}</div>
+                    {% if branch.description %}<div class="address__description">{{ branch.description }}</div>{% endif %}
+                    {% if branch.metro %}<div class="address__metro"><span>Метро</span> {{ branch.metro }}</div>{% endif %}
+                    {% if branch.phone %}<div class="address__phone">{{ branch.phone }}</div>{% endif %}
+                    {% if branch.website %}<div class="address__website"><a target="_blank" href="{{ branch.website_link }}">Сайт филиала</a></div>{% endif %}
+                  </div>
+                  <div class="address__cards">
+                      {% for person in branch.instructors|slice:":2" %}
+                        <div class="person  person--address">
+                          <div class="person__inner">
+                            <div class="person__header">
+                              <div class="person__img"><img src="{{ person.photo.url }}" alt="{{ person.name }}"></div>
+                              <div class="person__caption">
+                                <div class="person__name">{{ person.name }}</div>
+                                <div class="person__position">{{ person.short_description }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      <a href="{% url 'about:about-instructors' %}" class="btn  btn--plain address__show-all">Показать всех</a>
+                  </div>
+                </div>
+                <form method="POST" class="address__col">
+                    {% csrf_token %}
+                  <div class="feedback">
+                      {{ form.non_field_errors }}
+                      <style>.errorlist li { color: indianred}</style>
+                    <div class="feedback__title">Обратная связь</div>
+                      <label class="field-text  field-text--name"><span class="field-text__input-wrap">
+                          {{ form.name }}
+                      </span>{{ form.name.errors }}</label>
+                      <label class="field-text  field-text--email"><span class="field-text__input-wrap">
+                          {{ form.email }}
+                      </span>{{ form.email.errors }}</label>
+                      <label class="field-text  field-text--message"><span class="field-text__input-wrap">
+                          {{ form.message }}
+                      </span>{{ form.message.errors }}</label>
+                      <input type="hidden" name="city_id" id="id_city_id" value="{{ city.id }}">
+                      <input type="hidden" name="branch_id" id="id_branch_id" value="{{ branch.id }}">
+{#                    <div class="field-checkbox">#}
+{#                      <div class="field-checkbox__input-wrap  field-checkbox__input-wrap--lg"><label class="field-checkbox__name"><input class="field-checkbox__input" type="checkbox" name="check0" /><span class="field-checkbox__name-text">Принимаю <a href='#'>правила обработки</a> персональных данных</span></label></div>#}
+{#                    </div>#}
+                    <button type="submit" class="btn  btn--rich address__sign-in">Записаться в секцию</button>
+                  </div>
+                  <div class="address__title">Сеть клубов Карате-до и Тхэквондо</div>
+                </form>
+                  <button class="btn address__close"></button>
+              </div>
+                {% endfor %}
+
+            </div>
+          </div>
+        {% endfor %}
+
+
+
+        </div>
+      </div>
+    </section>
+    {% if news %}
+<section class="page-card page-card--thumbs-line page-card--news-line">
+  <div class="headline"><span>новости</span> клуба</div>
+  <section class="news-widget">
+    <ul class="news-widget__list">
+        {% for article in news %}
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="{% url 'news:article' article.url %}">
+              <div class="news-item__date">{{ article.date_string }}</div>
+              <div class="news-item__title">{{ article.title }}</div>
+            </a></li>
+        {% endfor %}
+    </ul>
+  </section>
+</section>
+    {% endif %}
+  </div>
+{% endblock %}
+{% block additional %}
+    {% if not request.user_agent.is_mobile %}
+        <script type="text/javascript" src="{% url 'map-script' %}"></script>
+    {% endif %}
+{% endblock %}

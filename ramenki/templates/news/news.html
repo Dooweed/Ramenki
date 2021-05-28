@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ceo_tags %}
+
+{% block title %}
+<title>{% get_title template_name title %}</title>
+{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{{ meta_description| default_if_none:"" }}"/>{% endblock %}
+
+{% if pages_count %}
+{% block header_links %}
+    <link rel="canonical" href="https://sk-ramenki.ru/news/{% if current_category_url != 'all' %}{{ current_category_url }}/{% endif %}" />
+{% endblock %}
+{% endif %}
+
+{% load cropping %}
+{% block main %}
+
+    <style>.category-nav__link a{ text-decoration: none; }</style>
+
+    <div class="page-main page-main--news-list">
+        <section class="page-card page-card--thumbs">
+          <div class="page-title">
+            <div class="title-add"><span>Новости</span></div>
+            <div class="title  title--rich">
+              <h1>Новости</h1>
+            </div>
+          </div>
+          <div class="thumbs-list  thumbs-list--news">
+            <ul class="thumbs-list__inner">
+              <li class="category-nav">
+                <ul class="category-nav__list">
+                  <li class="category-nav__link {% if current_category_url == 'all' %} active{% endif %}"><a href="{% url 'news:news' %}">Все</a></li>
+                    {% for category in categories %}
+                  <li class="category-nav__link {% if current_category_url == category.url %} active{% endif %}"><a href="{% url 'news:category' category.url %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                  <li class="category-nav__link {% if current_category_url == 'archive' %} active{% endif %}"><a href="{% url 'news:category' 'archive' %}">Архив</a></li>
+                </ul>
+              </li>
+            {% if query_set %}
+                {% for article in query_set %}
+                  <li class="thumb-card page-card  thumb-card--news"><a class="thumb-card__inner" href="{% url 'news:article' article.url %}">
+                      <div class="thumb-card__content">
+                        <div class="thumb-card__date">{{ article.date_string }}</div>
+                        <div class="thumb-card__title">{{ article.title }}</div>
+                        <div class="thumb-card__text">{{ article.description| safe }}</div>
+                        <div class="thumb-card__more">Подробнее</div>
+                      </div>
+                      <div class="thumb-card__img">
+                          {% if article.has_image %}
+                              <img src="{% cropped_thumbnail article "thumbnail_size" %}" alt="" />
+                          {% else %}
+                              <img src="{% static article.default_thumb %}" alt="" />
+                          {% endif %}
+                      </div>
+                    </a></li>
+                {% endfor %}
+            {% else %}
+                <p>Статей не добавлено</p>
+            {% endif %}
+            </ul>
+            <div class="thumbs-list__bottom">
+
+              {% if pages_count %}
+                <div class="pagination" aria-label="Page navigation">
+                    <div class="pagination__arrows">
+                        {% if prev_page %}<a href="{% url 'news:category-page' current_category_url prev_page %}" class="pagination__arrow pagination__arrow--prev"></a>{% endif %}
+                        {% if next_page %}<a href="{% url 'news:category-page' current_category_url next_page %}" class="pagination__arrow pagination__arrow--next"></a></div>{% endif %}
+                    <div class="pagination__item-list">
+                        {% for page in pages_count %}
+                            <a href="{% url 'news:category-page' current_category_url page %}" class="pagination__item{% if page == current_page %} pagination__item--active{% endif %}" href="{% url 'news:category-page' current_category_url page %}">{{ page }}</a>
+                        {% endfor %}
+                    </div>
+                  </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </section>
+
+    {% if media %}
+<section class="page-card page-card--thumbs-line">
+  <div class="headline"><span>медиа</span> СК «Раменки»</div>
+  <div class="thumbs-list  thumbs-list--line">
+    <ul class="thumbs-list__inner">
+      <div class="thumb-card thumb-card--video thumb-card--media thumb-card--small page-card">
+        <div class="thumb-card__inner" data-poster="{% if media.0.has_thumbnail %}{% cropped_thumbnail media.0 "crop" %}{% else %}{% static media.0.default_thumb %}{% endif %}" data-html="#video{{ media.0.id }}">
+          <div class="thumb-card__content">
+            <div class="thumb-card__title"><span>{{ media.0.name }}</span></div>
+          </div>
+          <div class="thumb-card__img"><img src="{% if media.0.has_thumbnail %}{% cropped_thumbnail media.0 "crop" %}{% else %}{% static media.0.default_thumb %}{% endif %}" alt="" /></div>
+          <div class="thumb-card__video" id="video{{ media.0.id }}">
+              {{ item.embed_tag| safe }}
+          </div>
+        </div>
+      </div>
+    {% for gallery in media.1 %}
+      <li class="thumb-card page-card  thumb-card--media thumb-card--gallery thumb-card--small">
+        <div class="thumb-card__inner">
+          <div class="thumb-card__content">
+            <div class="thumb-card__title-add">{{ gallery.category.name }}</div>
+            <div class="thumb-card__title">{{ gallery.name }}</div>
+
+            <ul class="gallery visuallyhidden">
+                {% for photo in gallery.photos.all %}
+                    <li href="{{ photo.image.url }}" title="{{ photo.get_name }}"></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <div class="thumb-card__img"><img src="{% if gallery.has_thumbnail %}{% cropped_thumbnail gallery "crop" %}{% else %}{% static gallery.default_thumb %}{% endif %}" alt="" /></div>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</section>
+    {% endif %}
+
+
+    </div>
+
+{% endblock %}

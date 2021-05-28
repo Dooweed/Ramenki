@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ceo_tags %}
+
+{% block title %}
+<title>{% get_title template_name title %}</title>
+{% endblock %}
+
+{% if meta_description %}
+    {% block meta_description %}<meta name="description" content="{{ article.get_meta_description }}"/>{% endblock %}
+{% endif %}
+
+{% block main %}
+{% load cropping %}
+  <div class="page-main page-main--article">
+    <section class="page-card article">
+      <div class="article__header">
+        <div class="article__header-inner">
+          <div class="page-title article__title">
+            <div class="title-add"><span>Новости</span></div>
+            <div class="title  title--rich">
+                  <h1>{{ article.title }}</h1>
+            </div>
+            <div class="article__title-date">12 декабря</div>
+          </div>
+            {% if next_article %}
+              <div class="thumb-card page-card article__next"><a class="thumb-card__inner" href="{% url 'news:article' next_article.url %}">
+                  <div class="thumb-card__content">
+                    <div class="thumb-card__date">{{ next_article.date_string }}</div>
+                    <div class="thumb-card__title">{{ next_article.title }}</div>
+                  </div>
+                </a></div>
+            {% endif %}
+              <div class="article__img">{% if article.has_image %}<img src="{% cropped_thumbnail article "article_size" %}" alt="">{% else %}<img src="{% static 'img/content/article-header.jpg' %}" alt="">{% endif %}</div>
+        </div>
+      </div>
+      <div class="article__main">
+        <div class="article__text">
+            {% if article.short_text %}<p class="article__lead">{{ article.short_text|safe }}</p>{% endif %}
+            {{ article.text| safe }}
+        </div>
+        <div class="article__aside">
+          <ul class="social">
+            <div class="social__inner">
+              <script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+              <script src="https://yastatic.net/share2/share.js"></script>
+              <div class="ya-share2" data-services="facebook,vkontakte" data-direction='vertical' data-bare></div>
+            </div>
+          </ul>
+        </div>
+        <div class="article__bottom"><a href="{% if last_category == 'all' %}{% url 'news:news' %}{% else %}{% url 'news:category' last_category %}{% endif %}" class="btn  btn--back btn--arrow-long-left">Назад</a></div>
+      </div>
+    </section>
+        <section class="page-card page-card--thumbs-line">
+          <div class="headline"><span>другие новости</span> мастерилиги</div>
+          <div class="thumbs-list  thumbs-list--news thumbs-list--line">
+            <ul class="thumbs-list__inner">
+                {% for article in other_news %}
+              <li class="thumb-card page-card  thumb-card--news"><a class="thumb-card__inner" href="{% url 'news:article' article.url %}">
+                  <div class="thumb-card__content">
+                    <div class="thumb-card__date">{{ article.date_string }}</div>
+                    <div class="thumb-card__title">{{ article.title }}</div>
+                    <div class="thumb-card__text">{{ article.description| safe }}</div>
+                    <div class="thumb-card__more">Подробнее</div>
+                  </div>
+                  <div class="thumb-card__img">
+                      {% if article.has_image %}
+                          <img src="{% cropped_thumbnail article "thumbnail_size" %}" alt="" />
+                      {% else %}
+                          <img src="{% static article.default_thumb %}" alt="" />
+                      {% endif %}
+                  </div>
+                </a></li>
+                {% endfor %}
+            </ul>
+          </div>
+        </section>
+
+    {% if media %}
+<section class="page-card page-card--thumbs-line">
+  <div class="headline"><span>медиа</span> СК «Раменки»</div>
+  <div class="thumbs-list  thumbs-list--line">
+    <ul class="thumbs-list__inner">
+      <div class="thumb-card thumb-card--video thumb-card--media thumb-card--small page-card">
+        <div class="thumb-card__inner" data-poster="{% if media.0.has_thumbnail %}{% cropped_thumbnail media.0 "crop" %}{% else %}{% static media.0.default_thumb %}{% endif %}" data-html="#video{{ media.0.id }}">
+          <div class="thumb-card__content">
+            <div class="thumb-card__title"><span>{{ media.0.name }}</span></div>
+          </div>
+          <div class="thumb-card__img"><img src="{% if media.0.has_thumbnail %}{% cropped_thumbnail media.0 "crop" %}{% else %}{% static media.0.default_thumb %}{% endif %}" alt="" /></div>
+          <div class="thumb-card__video" id="video{{ media.0.id }}">
+              {{ item.embed_tag| safe }}
+          </div>
+        </div>
+      </div>
+    {% for gallery in media.1 %}
+      <li class="thumb-card page-card  thumb-card--media thumb-card--gallery thumb-card--small">
+        <div class="thumb-card__inner">
+          <div class="thumb-card__content">
+            <div class="thumb-card__title-add">{{ gallery.category.name }}</div>
+            <div class="thumb-card__title">{{ gallery.name }}</div>
+
+            <ul class="gallery visuallyhidden">
+                {% for photo in gallery.photos.all %}
+                    <li href="{{ photo.image.url }}" title="{{ photo.get_name }}"></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <div class="thumb-card__img"><img src="{% if gallery.has_thumbnail %}{% cropped_thumbnail gallery "crop" %}{% else %}{% static gallery.default_thumb %}{% endif %}" alt="" /></div>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</section>
+    {% endif %}
+
+
+      </div>
+
+{% endblock %}

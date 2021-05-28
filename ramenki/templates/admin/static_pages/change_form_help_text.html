@@ -1,0 +1,12 @@
+{% extends 'admin/change_form.html' %}
+{% block form_top %}
+
+{% if help_text %}
+    <div style="padding: 10px;
+            border-left: 3px solid {% if color_main %}{{ color_main }}{% else %}#DC3545{% endif %};
+            background-color: {% if color_back %}{{ color_back }}{% else %}#FF7282{% endif %};
+            color: {% if color_back %}{{ color_font }}{% else %}#fff{% endif %};">
+        <span>{{ help_text| safe }}</span>
+    </div>
+{% endif %}
+{% endblock %}

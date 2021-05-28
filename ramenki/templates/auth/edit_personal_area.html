@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_links %}
+    <link rel="stylesheet" href="{% static 'css/edit_personal_area.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="page-main page-main--personal">
+
+    <section class="page-card">
+
+        <div class="page-title">
+            <div class="title-add"><span>личный кабинет</span></div>
+            <div class="title  title--rich">
+                <h1>{{ profile.name }}</h1>
+            </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="page-card page-card__content">
+            {% csrf_token %}
+            <p class="errors">{{ profile_form.non_field_errors }}{{ user_form.non_field_errors }}</p>
+            <div class="page-card__inner">
+
+                <div class="info-card">
+                    <div class="table info-card__inner info-card__inner-table">
+                        <div class="row table__row"><p class="row__item row__item-title">Фамилия<small class="errors"> {{ user_form.surname.errors.as_text }}</small></p><p class="row__item row__item-value">{{ user_form.surname }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Имя<small class="errors"> {{ user_form.forename.errors.as_text }}</small></p><p class="row__item row__item-value">{{ user_form.forename }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Отчество<small class="errors"> {{ profile_form.patronymic.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.patronymic }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Дата рождения<small class="errors"> {{ profile_form.birth_date.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.birth_date }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Будо пасспорт<small class="errors"> {{ profile_form.budo_pass.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.budo_pass }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Телефон<small class="errors"> {{ user_form.phone.errors.as_text }}</small></p><p class="row__item row__item-value">{{ user_form.phone }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Email<small class="errors"> {{ user_form.email.errors.as_text }}</small></p><p class="row__item row__item-value">{{ user_form.email }}</p></div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="table info-card__inner info-card__inner-table">
+                        <div class="row table__row"><p class="row__item row__item-title">Тренер<small class="errors"> {{ profile_form.coach.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.coach }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Квалификация<small class="errors"> {{ profile_form.qualification_number.errors.as_text }}{{ profile_form.qualification_type.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.qualification_number }}{{ profile_form.qualification_type }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Вконтакте<small class="errors"> {{ profile_form.vkontakte.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.vkontakte }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Инстаграм<small class="errors"> {{ profile_form.instagram.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.instagram }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Фейсбук<small class="errors"> {{ profile_form.facebook.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.facebook }}</p></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Одноклассники<small class="errors"> {{ profile_form.odnoklassniki.errors.as_text }}</small></p><p class="row__item row__item-value">{{ profile_form.odnoklassniki }}</p></div>
+                        {% if profile_form.social_photo %}
+                        <div class="row table__row"><p class="row__item row__item-title">Использовать фото из соц.сети<small class="errors"> {{ profile_form.use_social_photo }}</small></p><p class="row__item row__item-image">{{ profile_form.use_social_photo }}</p></div>
+                        {% endif %}
+                        <div class="row table__row"><p class="row__item row__item-title">Изображение профиля<small class="errors"> {{ profile_form.photo.errors.as_text }}</small></p><p class="row__item row__item-image">{{ profile_form.photo }}</p></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="submit-button">
+                <button type="submit" class="btn  btn--rich submit-button__button">Сохранить</button>
+            </div>
+        </form>
+
+    </section>
+
+    </div>
+
+{% endblock %}

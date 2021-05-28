@@ -1,0 +1,106 @@
+.page-card .page-card__content{
+    padding: 50px 0 20px 0;
+}
+.page-card .page-card__inner{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.info-card{
+    max-width: 600px;
+    flex-basis: 50%;
+    min-height: 500px;
+}
+.info-card .info-card__inner {
+    padding: 10px;
+    height: 100%;
+}
+.info-card .info-card__inner.info-card__inner-table {
+    padding: 0 20px;
+}
+.table{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.table .table__row {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: calc(100%/7);
+    flex-wrap: wrap;
+}
+.row .row__item{
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+    font-family: "GothamPro", -apple-system, BlinkMacSystemFont, "Ubuntu", "Droid Sans", "Helvetica Neue", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.row .row__item.row__item-title {
+    color: #adadad;
+    flex-shrink: 0;
+    padding-right: 20px;
+}
+.row .row__item.row__item-value {
+    flex-basis: 100%;
+    display: flex;
+}
+.row .row__item.row__item-value input, .row .row__item.row__item-value select{
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 700;
+    background-color: #252525;
+    border: 1px solid #adadad;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+.row .row__item.row__item-image{
+    font-size: 10px;
+    width: 100%;
+}
+.row .row__item.row__item-image input{
+    width: 100%;
+    font-weight: 700;
+    max-width: 400px;
+}
+.row .row__item.row__item-value input {
+    width: 100%;
+}
+.row .row__item.row__item-value select option{
+    color: #adadad;
+}
+.submit-button {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.submit-button__button {
+    margin-top: 20px;
+}
+.errors {
+    color: #FC0202;
+}
+small.errors {
+    text-align: right;
+    text-transform: initial;
+}
+@media screen and (max-width: 1280px){
+    .info-card{
+        flex-basis: 50%;
+        min-height: 500px;
+    }
+    .info-card .info-card__inner.info-card__inner-image {
+        justify-content: flex-start;
+    }
+}
+@media screen and (max-width: 768px){
+    .info-card{
+        flex-basis: 100%;
+    }
+    .info-card .info-card__inner.info-card__inner-table {
+        padding: 0;
+    }
+}

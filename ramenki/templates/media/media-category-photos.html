@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ceo_tags %}
+
+{% block title %}
+<title>{% get_title template_name title %}</title>
+{% endblock %}
+
+{% block meta_description %}<meta name="description" content="{{ meta_description| default_if_none:"" }}"/>{% endblock %}
+
+
+{% if pages_count %}
+{% block header_links %}
+    <link rel="canonical" href="https://sk-ramenki.ru/media/photos/{{ current_category_url }}/" />
+{% endblock %}
+{% endif %}
+
+{% block main %}
+    {% load cropping %}
+    <style>.category-nav__link a{ text-decoration: none; }</style>
+
+  <div class="page-main page-main--media">
+    <section class="page-card page-card--thumbs">
+      <div class="page-title">
+        <div class="title-add"><span>Медиа</span></div>
+        <div class="title  title--rich">
+          <h1>Фото</h1>
+        </div>
+      </div>
+      <div class="thumbs-list  thumbs-list--media">
+        <ul class="thumbs-list__inner">
+          <li class="category-nav">
+            <ul class="category-nav__list">
+              <li class="category-nav__link"><a href="{% url 'mediacontent:main' %}">Все</a></li>
+              <li class="category-nav__link active"><a href="{% url 'mediacontent:photos' 'all' %}">Фото</a></li>
+              <li class="category-nav__link"><a href="{% url 'mediacontent:videos' 'all' %}">Видео</a></li>
+              <li class="category-nav__link"><a href="{{ youtube_link }}">Youtube</a></li>
+            </ul>
+          </li>
+          <div class="media-nav">
+            <div class="media-nav__inner">
+              <ul class="inner-nav inner-nav__list">
+                  {% if current_category_url == 'all' %}
+                    <li class="inner-nav__item inner-nav__item--active"><span class="inner-nav__link">Все</span></li>
+                  {% else %}
+                    <li class="inner-nav__item"><a class="inner-nav__link" href="{% url 'mediacontent:photos' 'all' %}">Все</a></li>
+                  {% endif %}
+
+              {% for category in categories %}
+                  {% if current_category_url == category.url %}
+                    <li class="inner-nav__item inner-nav__item--active"><span class="inner-nav__link">{{ category.name }}</span></li>
+                  {% else %}
+                    <li class="inner-nav__item"><a class="inner-nav__link" href="{% url 'mediacontent:photos' category.url %}">{{ category.name }}</a></li>
+                  {% endif %}
+              {% endfor %}
+              </ul>
+            </div>
+          </div>
+            {% for item in query_set %}
+          <li class="thumb-card page-card  thumb-card--media thumb-card--gallery">
+            <a class="thumb-card__inner" href="#">
+              <div class="thumb-card__content">
+                <div class="thumb-card__title-add">{{ item.category.name }}</div>
+                <div class="thumb-card__title"><span>{{ item.name }}</span></div>
+                <ul class="gallery visuallyhidden">
+                    {% for photo in item.photo_set.all %}
+                    <li href="{{ photo.image.url }}" title="{{ photo.get_name }}"></li>
+                    {% endfor %}
+                </ul>
+              </div>
+              <div class="thumb-card__img"><img src="{% if item.has_thumbnail %}{% if item.use_raw_thumbnail %}{{ item.thumbnail.url }}{% else %}{% cropped_thumbnail item "crop" %}{% endif %}{% else %}{% static item.default_thumb %}{% endif %}" alt="" /></div>
+            </a>
+          </li>
+            {% endfor %}
+        </ul>
+        <div class="thumbs-list__bottom">
+          {% if pages_count %}
+            <div class="pagination" aria-label="Page navigation">
+                <div class="pagination__arrows">
+                    {% if prev_page %}<a href="{% url 'mediacontent:photos-page' current_category_url prev_page %}" class="pagination__arrow pagination__arrow--prev"></a>{% endif %}
+                    {% if next_page %}<a href="{% url 'mediacontent:photos-page' current_category_url next_page %}" class="pagination__arrow pagination__arrow--next"></a></div>{% endif %}
+                <div class="pagination__item-list">
+                    {% for page in pages_count %}
+                        <a href="{% url 'mediacontent:photos-page' current_category_url page %}" class="pagination__item{% if page == current_page %} pagination__item--active{% endif %}" href="{% url 'mediacontent:photos-page' current_category_url page %}">{{ page }}</a>
+                    {% endfor %}
+                </div>
+              </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    {% if news %}
+<section class="page-card page-card--thumbs-line page-card--news-line">
+  <div class="headline"><span>новости</span> клуба</div>
+  <section class="news-widget">
+    <ul class="news-widget__list">
+        {% for article in news %}
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="{% url 'news:article' article.url %}">
+              <div class="news-item__date">{{ article.date_string }}</div>
+              <div class="news-item__title">{{ article.title }}</div>
+            </a></li>
+        {% endfor %}
+    </ul>
+  </section>
+</section>
+    {% endif %}
+
+
+  </div>
+{% endblock %}

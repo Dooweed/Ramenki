@@ -1,0 +1,628 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+<title>{% if page.title_tag %}{{ page.title_tag }}{% else %}{{ page.title }}{% endif %}{{ title_postfix }}</title>
+{% endblock %}
+{% if page.meta_tag %}{% block meta_description %}<meta name="description" content="{{ page.meta_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+{% if page.meta_keywords_tag %}{% block meta_keywords %}<meta name="keywords" content="{{ page.meta_keywords_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+{% if page.meta_robots_tag %}{% block meta_robots %}<meta name="robots" content="{{ page.meta_robots_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+
+{% block main %}
+    {% load cropping %}
+  <div class="page-main page-main--about page-main--structure">
+    <section class="page-card article">
+      <div class="article__header">
+        <div class="article__header-inner">
+          <div class="page-title article__title">
+            <div class="title-add"><span>О клубе</span></div>
+            <div class="title  title--rich">
+              <h1>{{ page.title }}</h1>
+            </div>
+          </div>
+          <div class="article__subject">{{ page.title }}</div>
+          <div class="article__slogan">Нашей целью является
+            воспитание порядочных, достойных
+            и добрых людей</div>
+          <div class="article__img"><img src="{{ page.image.url }}" alt=""></div>
+        </div>
+        <div class="about-nav" id="about-nav"><button class="btn  btn--arrow-down-red about-nav__toggle nav-toggle" data-target-id="about-nav" data-target-class-toggle="about-nav--open">{{ page.title }}</button>
+          <div class="about-nav__inner">
+            <ul class="inner-nav inner-nav__list">
+              {% for item in subdivisions_list %}
+                {% if item.id == page.id %}
+                    <li class="inner-nav__item inner-nav__item--active"><span class="inner-nav__link">{{ item.title }}</span></li>
+                {% else %}
+                    <li class="inner-nav__item"><a class="inner-nav__link" href="{% if item.url %}{% url 'about:static-page' item.url %}{% else %}{% url 'taekwondo:main' %}{% endif %}">{{ item.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+            <ul class="social  social--about-menu">
+              <div class="social__inner">
+                <li class="social__link-wrap  social__link-wrap--fb-black"><a class="social__link" href="{{ facebook_link }}"><span>Фейсбук</span></a></li>
+                <li class="social__link-wrap  social__link-wrap--vk-black"><a class="social__link" href="{{ vk_link }}"><span>В контакте</span></a></li>
+                <li class="social__link-wrap  social__link-wrap--insta-black"><a class="social__link" href="{{ instagram_link }}"><span>Инстаграм</span></a></li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="about__main">
+
+        <div class="about__section">
+          <div class="about__right about__cards-large">
+            {% if president %}
+            <div class="person-large">
+              <div class="person-large__position">Президент Клуба</div>
+              <div class="person-large__name">{{ president.name }}</div>
+              <div class="person-large__level">{{ president.short_description }}</div>
+              <div class="person-large__img"><img src="{% if president.has_photo %}{% cropped_thumbnail president "photo_profile" %}{% else %}{% static 'img/person-empty-large.png' %}{% endif %}" alt="" /></div><button class="btn  btn--plain person-large__more"  data-custom-open="modal-person-{{ president.id }}">Подробнее</button>
+            </div>
+            {% endif %}
+            {% if vice_president %}
+            <div class="person-large">
+              <div class="person-large__position">Вице-президент</div>
+              <div class="person-large__name">{{ vice_president.name }}</div>
+              <div class="person-large__level">{{ vice_president.short_description }}</div>
+              <div class="person-large__img"><img src="{% if vice_president.has_photo %}{% cropped_thumbnail vice_president "photo_profile" %}{% else %}{% static 'img/person-empty-large.png' %}{% endif %}" alt="" /></div><button class="btn  btn--plain person-large__more"  data-custom-open="modal-person-{{ vice_president.id }}">Подробнее</button>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="about__section tabs">
+          <div class="about__left about__text">
+            <ul class="tabs__links" role="tablist">
+              <li class="tabs__link-wrap   tabs__link-wrap--active" role="presentation"><a class="tabs__link" href="#tab00" data-toggle="tab" role="tab">Тренерский Комитет</a></li>
+              <li class="tabs__link-wrap" role="presentation"><a class="tabs__link" href="#tab01" data-toggle="tab" role="tab">Судейский комитет</a></li>
+              <li class="tabs__link-wrap" role="presentation"><a class="tabs__link" href="#tab02" data-toggle="tab" role="tab">Методический и Аттестационный комитет</a></li>
+              <li class="tabs__link-wrap" role="presentation"><a class="tabs__link" href="#tab03" data-toggle="tab" role="tab">Физкультурно-массовый комитет</a></li>
+              <li class="tabs__link-wrap" role="presentation"><a class="tabs__link" href="#tab04" data-toggle="tab" role="tab">Администрация</a></li>
+              <li class="tabs__link-wrap" role="presentation"><a class="tabs__link" href="#tab05" data-toggle="tab" role="tab">Родительский комитет</a></li>
+            </ul>
+          </div>
+          <div class="about__right">
+            <div class="tabs__content-item   tabs__content-item--active" id="tab00" role="tabpanel">
+              <div class="about__text">
+                <p class="article__lead">Отдельное структурное подразделение, отвечающее за обще-спортивную подготовку спортсменов входящих в сборную команду, а также претендентов на попадание сборную.</p>
+              </div>
+              <div class="about__cards">
+                  {% for item in coach_committee %}
+                <div class="person person--flag {{ item.color_class }}">
+                  <div class="person__inner">
+                    <div class="person__header">
+                      <div class="person__img">{% if item.photo_avatar %}<img src="{% cropped_thumbnail item "photo_avatar" %}" alt="">{% endif %}</div>
+                      <div class="person__caption">
+                        <div class="person__name">{{ item.name }}</div>
+                          {% if item.short_description %}
+                            <div class="person__position">{{ item.short_description }}</div>
+                          {% endif %}
+                      </div>
+                    </div>
+                    <ul class="person__title-list">
+                      {% if item.qualification %}<li class="person__title-item">{{ item.qualification }} дан японской организации Каратэ-До Маруошикай (JKMO)</li>{% endif %}
+                    </ul><button class="btn  btn--plain person__more"  data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                  </div>
+                </div>
+                  {% endfor %}
+              </div>
+              <div class="about__text">
+
+                {{ page_content.0| safe }}
+
+              </div>
+            </div>
+            <div class="tabs__content-item" id="tab01" role="tabpanel">
+              <div class="about__text">
+                <p class="article__lead">Отдельное структурное подразделение, отвечающее за объективную оценку спортсменов со стороны судейства соревнований.</p>
+              </div>
+              <div class="about__cards">
+                  {% for item in judiciary %}
+                <div class="person person--flag {{ item.color_class }}">
+                  <div class="person__inner">
+                    <div class="person__header">
+                      <div class="person__img">{% if item.photo_avatar %}<img src="{% cropped_thumbnail item "photo_avatar" %}" alt="">{% endif %}</div>
+                      <div class="person__caption">
+                        <div class="person__name">{{ item.name }}</div>
+                          {% if item.short_description %}
+                            <div class="person__position">{{ item.short_description }}</div>
+                          {% endif %}
+                      </div>
+                    </div>
+                    <ul class="person__title-list">
+                      {% if item.qualification %}<li class="person__title-item">{{ item.qualification }} дан японской организации Каратэ-До Маруошикай (JKMO)</li>{% endif %}
+                      {% if item.merits %}<li class="person__title-item">{{ item.merits| safe }}</li>{% endif %}
+                    </ul><button class="btn  btn--plain person__more"  data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                  </div>
+                </div>
+                  {% endfor %}
+              </div>
+              <div class="about__text">
+
+                {{ page_content.1| safe }}
+
+              </div>
+            </div>
+            <div class="tabs__content-item" id="tab02" role="tabpanel">
+              <div class="about__text">
+                <p class="article__lead">Отдельное структурное подразделение, отвечающее за единый техническо-тренировочный процесс, а также за единую систему аттестации спортсменов.</p>
+              </div>
+              <div class="about__cards">
+                  {% for item in methodical_certification_committee %}
+                <div class="person person--flag {{ item.color_class }}">
+                  <div class="person__inner">
+                    <div class="person__header">
+                      <div class="person__img">{% if item.photo_avatar %}<img src="{% cropped_thumbnail item "photo_avatar" %}" alt="">{% endif %}</div>
+                      <div class="person__caption">
+                        <div class="person__name">{{ item.name }}</div>
+                          {% if item.short_description %}
+                            <div class="person__position">{{ item.short_description }}</div>
+                          {% endif %}
+                      </div>
+                    </div>
+                    <ul class="person__title-list">
+                      {% if item.qualification %}<li class="person__title-item">{{ item.qualification }} дан японской организации Каратэ-До Маруошикай (JKMO)</li>{% endif %}
+                    </ul><button class="btn  btn--plain person__more"  data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                  </div>
+                </div>
+                  {% endfor %}
+              </div>
+              <div class="about__text">
+
+                {{ page_content.2| safe }}
+
+              </div>
+            </div>
+            <div class="tabs__content-item" id="tab03" role="tabpanel">
+              <div class="about__text">
+                <p class="article__lead">Отдельное структурное подразделение, отвечающее за проведение физкультурно-массовых мероприятий (соревнования, показательные выступления).</p>
+              </div>
+              <div class="about__cards">
+                  {% for item in physical_mass_committee %}
+                <div class="person person--flag {{ item.color_class }}">
+                  <div class="person__inner">
+                    <div class="person__header">
+                      <div class="person__img">{% if item.photo_avatar %}<img src="{% cropped_thumbnail item "photo_avatar" %}" alt="">{% endif %}</div>
+                      <div class="person__caption">
+                        <div class="person__name">{{ item.name }}</div>
+                          {% if item.short_description %}
+                            <div class="person__position">{{ item.short_description }}</div>
+                          {% endif %}
+                      </div>
+                    </div>
+                    <ul class="person__title-list">
+                      {% if item.qualification %}<li class="person__title-item">{{ item.qualification }} дан японской организации Каратэ-До Маруошикай (JKMO)</li>{% endif %}
+                    </ul><button class="btn  btn--plain person__more"  data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                  </div>
+                </div>
+                  {% endfor %}
+              </div>
+              <div class="about__text">
+
+                {{ page_content.3| safe }}
+
+              </div>
+            </div>
+            <div class="tabs__content-item" id="tab04" role="tabpanel">
+              <div class="about__text">
+                <p class="article__lead">Отдельное структурное подразделение, являющееся исполнителем решений президента Клуба.</p>
+              </div>
+              <div class="about__cards">
+                  {% for item in administration %}
+                <div class="person person--flag {{ item.color_class }}">
+                  <div class="person__inner">
+                    <div class="person__header">
+                      <div class="person__img">{% if item.photo_avatar %}<img src="{% cropped_thumbnail item "photo_avatar" %}" alt="">{% endif %}</div>
+                      <div class="person__caption">
+                        <div class="person__name">{{ item.name }}</div>
+                          {% if item.short_description %}
+                            <div class="person__position">{{ item.short_description }}</div>
+                          {% endif %}
+                      </div>
+                    </div>
+                    <ul class="person__title-list">
+                      {% if item.qualification %}<li class="person__title-item">{{ item.qualification }} дан японской организации Каратэ-До Маруошикай (JKMO)</li>{% endif %}
+                    </ul><button class="btn  btn--plain person__more"  data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                  </div>
+                </div>
+                  {% endfor %}
+              </div>
+              <div class="about__text">
+
+                {{ page_content.4| safe }}
+
+              </div>
+            </div>
+            <div class="tabs__content-item" id="tab05" role="tabpanel">
+              <div class="about__text">
+
+                {{ page_content.5| safe }}
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% if page.additional_content_left or page.additional_content_right %}
+        <div class="about__section">
+            {% if page.additional_content_left %}
+          <div class="about__left about__text">
+              {{ page.additional_content_left| safe }}
+          </div>
+            {% endif %}
+            {% if page.additional_content_right %}
+          <div class="about__right about__text">
+              {{ page.additional_content_right| safe }}
+          </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      </div>
+    </section>
+    {% if news %}
+<section class="page-card page-card--thumbs-line page-card--news-line">
+  <div class="headline"><span>новости</span> клуба</div>
+  <section class="news-widget">
+    <ul class="news-widget__list">
+        {% for article in news %}
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="{% url 'news:article' article.url %}">
+              <div class="news-item__date">{{ article.date_string }}</div>
+              <div class="news-item__title">{{ article.title }}</div>
+            </a></li>
+        {% endfor %}
+    </ul>
+  </section>
+</section>
+    {% endif %}
+  </div>
+{% endblock %}
+{% block additional %}
+  <div class="modal" id="modal-person-{{ president.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ president.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Президент клуба</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img"><img src="{% if president.has_photo %}{% cropped_thumbnail president "photo_profile" %}{% else %}{% static 'img/person-empty-large.png' %}{% endif %}" alt="" /></div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ president.name }}</div>
+                <div class="person-modal__position">{{ president.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ president.verbose_sports_kinds }}</div>
+                  </div>
+                {% if president.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ president.age }}</div>
+                  </div>
+                {% endif %}
+                {% if president.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ president.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if president.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ president.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if president.additional_information %}
+                  {{ president.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-person-{{ vice_president.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ vice_president.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Вице-президент клуба</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if vice_president.has_photo %}<img src="{% cropped_thumbnail vice_president "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ vice_president.name }}</div>
+                <div class="person-modal__position">{{ vice_president.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ vice_president.verbose_sports_kinds }}</div>
+                  </div>
+                {% if vice_president.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ vice_president.age }}</div>
+                  </div>
+                {% endif %}
+                {% if vice_president.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ vice_president.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if vice_president.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ vice_president.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if vice_president.additional_information %}
+                  {{ vice_president.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% for item in coach_committee %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Тренерский комитет</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>
+                  </div>
+                {% if item.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ item.age }}</div>
+                  </div>
+                {% endif %}
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+    {% for item in judiciary %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Судейский корпус</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>
+                  </div>
+                {% if item.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ item.age }}</div>
+                  </div>
+                {% endif %}
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+    {% for item in methodical_certification_committee %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Методический и аттестационный комитет</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>
+                  </div>
+                {% if item.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ item.age }}</div>
+                  </div>
+                {% endif %}
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+    {% for item in physical_mass_committee %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Физкультурно-массовый комитет</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>
+                  </div>
+                {% if item.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ item.age }}</div>
+                  </div>
+                {% endif %}
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+    {% for item in administration %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Администрация</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>main
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+{% endblock %}
+

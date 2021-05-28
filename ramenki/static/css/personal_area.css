@@ -1,0 +1,98 @@
+.page-card .page-card__content{
+    padding: 50px 0 0 0;
+}
+.page-card .page-card__inner{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.info-card{
+    flex-basis: 33.3%;
+    min-height: 500px;
+}
+.info-card .info-card__inner {
+    padding: 10px;
+    height: 100%;
+}
+.info-card .info-card__inner.info-card__inner-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.info-card .info-card__inner.info-card__inner-table {
+    padding: 0 20px;
+}
+.info-card .info-card__image {
+    padding: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.info-card .info-card__image img{
+    width: 100%;
+    height: auto;
+}
+.table{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.table .table__row {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: calc(100%/7);
+}
+.divisor{
+    background-color: #adadad;
+    height: 1px;
+    width: 100%;
+}
+.row .row__item{
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+    font-family: "GothamPro", -apple-system, BlinkMacSystemFont, "Ubuntu", "Droid Sans", "Helvetica Neue", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.row .row__item.row__item-title {
+    color: #adadad;
+    flex-shrink: 0;
+    padding-right: 20px;
+}
+.row .row__item.row__item-value {
+    font-weight: 700;
+    text-align: right;
+}
+.edit-button {
+    display: flex;
+    flex-direction: row-reverse;
+}
+@media screen and (max-width: 1280px){
+    .info-card__image{
+        flex-basis: 40%;
+    }
+    .info-card{
+        flex-basis: 50%;
+        min-height: 500px;
+    }
+    .info-card .info-card__inner.info-card__inner-image {
+        justify-content: flex-start;
+    }
+}
+@media screen and (max-width: 768px){
+    .info-card__image{
+        flex-basis: 100%;
+        min-height: 0;
+    }
+    .info-card{
+        flex-basis: 100%;
+    }
+    .info-card .info-card__inner.info-card__inner-table {
+        padding: 0;
+    }
+    .row {
+        flex-wrap: wrap;
+    }
+}

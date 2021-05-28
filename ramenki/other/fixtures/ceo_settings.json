@@ -1,0 +1,142 @@
+[
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "404.html",
+      "title": "Упс! Кажется вы попали на несуществующую страницу..."
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "500.html",
+      "title": "Ошибка сервера"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "base.html",
+      "title": "Базовый"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "index.html",
+      "title": "Спортивный клуб каратэ шотокан «Раменки»",
+      "meta_description": "Спортивный клуб Раменки обучает каратэ взрослых и детей. Самая большая сеть клубов в Москве. Семинары ведущих тренеров мира, летние лагеря и сборы, звоните т. (495) 724-61-71",
+      "meta_keywords": "секция карате, школа каратэ, клуб каратэ,  спортивное каратэ, москва, подмосковное карате"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "info_response.html",
+      "title": "Сброс пароля",
+      "has_custom_title": true
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/auth.html",
+      "title": "Вход"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/edit-personal_area.html",
+      "title": "Личный кабинет"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/personal_area.html",
+      "title": "Личный кабинет"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/password_change/password_change.html",
+      "title": "Смена пароля"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/password_change/password_change_done.html",
+      "title": "Смена пароля"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/password_reset/password_reset.html",
+      "title": "Сброс пароля"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/password_reset/password_reset_confirm.html",
+      "title": "Сброс пароля"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "auth/password_reset/password_reset_done.html",
+      "title": "Сброс пароля"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "contacts/contacts.html",
+      "title": "Контакты"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "media/media.html",
+      "title": "Медиа",
+      "meta_robots": "noindex, follow"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "media/media-category-photos.html",
+      "has_custom_title": true,
+      "meta_robots": "noindex, follow"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "media/media-category-videos.html",
+      "has_custom_title": true,
+      "meta_robots": "noindex, follow"
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "news/article.html",
+      "has_custom_title": true
+    }
+  },
+  {
+    "model": "other.CeoSettings",
+    "fields": {
+      "template_name": "news/news.html",
+      "has_custom_title": true,
+      "meta_robots": "noindex, follow"
+    }
+  }
+]

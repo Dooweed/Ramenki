@@ -1,0 +1,289 @@
+[
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Программа аттестации",
+      "url": "attestation",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-02.jpg",
+      "content": "<div class=\"belts  belts--white\">\n              <div class=\"belts__text about__text\">\n                <p class=\"article__lead\">В двадцатых годах XX века Фунакоси перенял систему ученических и мастерских степеней (кю и данов), разработанную основателем дзюдо Дзигоро Кано. Эта система использовала цветные пояса для обозначения степени мастерства занимающегося данным видом боевого искусства.</p>\n                <div class=\"about__bg-img about__bg-img--kimono\"></div>\n              </div>\n              <div class=\"belts__item belts__item--dan-1\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">1-й дан</div>\n                  <div class=\"belts__desc\">чёрный</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-1\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">1-й кю</div>\n                  <div class=\"belts__desc\">Коричневый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-2\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">2-й кю</div>\n                  <div class=\"belts__desc\">Коричневый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-3\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">3-й кю</div>\n                  <div class=\"belts__desc\">Коричневый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-4\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">4-й кю</div>\n                  <div class=\"belts__desc\">синий пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-5\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">5-й кю</div>\n                  <div class=\"belts__desc\">светло-синий пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-6\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">6-й кю</div>\n                  <div class=\"belts__desc\">зеленый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-7\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">7-й кю</div>\n                  <div class=\"belts__desc\">оранжевый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n              <div class=\"belts__item belts__item--ku-8\">\n                <div class=\"belts__item-inner\">\n                  <div class=\"belts__name\">10-8-й кю</div>\n                  <div class=\"belts__desc\">Белый-желтый пояс</div><a class=\"btn  btn--plain belts__more\">Подробнее</a>\n                </div>\n              </div>\n            </div>\n              <div id=\"belts-detailed\" style=\"padding-top: 24px\" class=\"belt__descriptions\">\n                  <style>.belt__detailed-description { display: none }</style>\n                  <div class=\"belt__detailed-description belt__detailed-description--dan-1\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-1\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-2\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-3\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-4\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-5\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-6\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-7\">\n                      <p>Контент под редактор</p>\n                  </div>\n                  <div class=\"belt__detailed-description belt__detailed-description--ku-8\">\n                      <p>Контент под редактор</p>\n                  </div>\n              </div>\n            <script>\n              const belt_links = document.querySelectorAll(\".belts__item .belts__item-inner a\"),\n              belt_descriptions = document.getElementsByClassName(\"belt__detailed-description\");\n              console.log(belt_links)\n\n              function hide_all() {\n                  for (let i = 0; i < belt_descriptions.length; i++){\n                      belt_descriptions[i].style.display = \"none\";\n                      belt_links[i].innerHTML = \"Подробнее\"\n                  }\n              }\n              for (let i = 0; i < belt_links.length; i++){\n                  belt_links[i].addEventListener(\"click\", function (event) {\n                      if (belt_descriptions[i].style.display === \"block\"){\n                        hide_all();\n                        event.stopPropagation();\n                      }\n                      else{\n                        hide_all();\n                        event.stopPropagation();\n                        belt_descriptions[i].style.display = \"block\";\n                        location.href = \"#belts-detailed\"\n                        belt_links[i].innerHTML = \"Скрыть\"\n                      }\n                  })\n              }\n              hide_all()\n          </script>",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Принципы Додзё",
+      "url": "dojo-principles",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Каратэ для взрослых",
+      "url": "for-adults",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Детское каратэ",
+      "url": "for-children",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "История",
+      "url": "history",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "<div class=\"about__text\">\n              <h2>Происхождение</h2>\n              <p>Фунакоси Гитин обучался двум популярным стилям окинавского тотэ: Сёрэй Рю и Сёрин-рю. Впоследствии он объединил и модифицировал эти два стиля. Следуя политической конъюнктуре того времени Фунакоси изменил окинавские названия ката на японские. Претерпели некоторые изменения и сами ката. Сын основателя Сётокан-каратэ Фунакоси Ёситака (или Гиго) ввёл в технику каратэ удары ногами по верхнему уровню и соревновательную практику, отсутствовавшие в окинавском каратэ. Фунакоси Гитин большое внимание уделял ритуалу, строгому соблюдению норм и следованию установленным правилам. Это вместе с заменой окинавских терминов японскими и замалчиванием китайских корней каратэ имело целью сделать каратэ составной частью Будо, пронизанного японским национальным духом, основанного на самурайской культуре и традициях. Под влиянием основателя дзюдо мастера Дзигоро Кано Фунакоси ввёл новое название: каратэ-до — «Путь каратэ» и требовал отныне называть свой стиль именно так. Тем самым Фунакоси Гитин подчёркивал тот факт, что каратэ-до является не только боевым искусством, но и — по аналогии с дзюдо — системой физического и духовного воспитания. Именно поэтому Сётокан каратэ-до называют самым академическим стилем японского каратэ, несущим дух Будо, в отличие от модернистских стилей каратэ, появившихся в последнее время, возможно более практичных, но являющихся по сути всего лишь системами рукопашного боя.</p>\n              <h2>Особенности стиля</h2>\n              <p>Сётокан отличается линейными перемещениями и линейным приложением силы. Стойки низкие и широкие. Блоки жёсткие. Удары руками мощные и реверсивные с включением в удар бедра. Принцип иккэн-хисацу (одним ударом — наповал) является основополагающим в Сётокан карате-до. Программа Сётокан карате-до имеет 26 различных ката, принятых называть классическими, изучение и выполнение которых является важнейшей составляющей тренинга.</p>\n              <ul class=\"article__list\">\n                <li><b>выработке жёсткого баланса</b>, общей устойчивости, что достигается длительной отработкой низких, глубоких стоек;</li>\n                <li><b>вращательным «щелчковым» движением бедер в горизонтальной плоскости</b>, в прямом или обратном удару направлении, что генерирует огромную разрушительную силу в ударах и блоках;</li>\n                <li><b>своевременному и мгновенному включению всех групп мышц в конечной фазе удара</b>, когда положительное ускорение мгновенно сменяется отрицательным (если это возвратное движение) или резкой остановкой, благодаря чему возникает импульс -от удара или блока, или ударная волна, распространяющаяся вглубь поражаемой поверхности.</li>\n              </ul>\n              <h2>Градация поясов</h2>\n              <div class=\"belts  belts--colorfull\">\n                <div class=\"belts__text\">\n                  <p class=\"belts__lead\">В двадцатых годах XX века Фунакоси перенял систему ученических и мастерских степеней (кю и данов), разработанную основателем дзюдо Дзигоро Кано. Эта система использовала цветные пояса для обозначения степени мастерства занимающегося данным видом боевого искусства.</p>\n                  <p>Изначально каратэ имело только три цвета поясов: белый, коричневый и черный (как это принято и в настоящее время в японской системе поясов дзюдо). В настоящее время многие школы используют систему степеней с различными цветами поясов. Наша школа использует систему японской организации Мариошикай каратэ-до (JKMO)</p>\n                  <div class=\"belts__card\">\n                    <p><b>Черный пояс</b> — именной. На нем вышито имя владельца и его Дан. Технология изготовления черных поясов отличается от всех остальных, \"цветных\". В то время как цветные пояса меняются, черный пояс остается один на всю жизнь. В отличие от цветных поясов, которые являются просто покрашенной тканью, черный пояс - не красится. В его основе лежит белый пояс, обшитый поверх тонкой черной тканью. По мере тренировок черная ткань поверхности истирается, что свидетельствует об интенсивности тренировок.</p>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--dan-1\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">1-й дан</div>\n                    <div class=\"belts__desc\">чёрный</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-1\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">1-й кю</div>\n                    <div class=\"belts__desc\">темно-коричн.</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-2\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">2-й кю</div>\n                    <div class=\"belts__desc\">Коричневый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-3\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">3-й кю</div>\n                    <div class=\"belts__desc\">светло-коричневый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-4\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">4-й кю</div>\n                    <div class=\"belts__desc\">синий</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-5\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">5-й кю</div>\n                    <div class=\"belts__desc\">светло-синий</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-6\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">6-й кю</div>\n                    <div class=\"belts__desc\">зеленый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-7\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">7-й кю</div>\n                    <div class=\"belts__desc\">оранжевый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-8\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">8-й кю</div>\n                    <div class=\"belts__desc\">Желтый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-9\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">9-й кю</div>\n                    <div class=\"belts__desc\">белый</div>\n                  </div>\n                </div>\n                <div class=\"belts__item belts__item--ku-10\">\n                  <div class=\"belts__item-inner\">\n                    <div class=\"belts__name\">10-й кю</div>\n                    <div class=\"belts__desc\">белый</div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"about__text-card\">\n              <h2>Знаменитости, изучавшие Сётокан</h2>\n              <p>Американский певец Элвис Пресли изучал этот стиль во время армейской службы в Германии.Брюс Ли некоторое время брал уроки Сётокана во время создания своей собственной системы (Джит Кун До), обучаясь у известного мастера Хирокадзу Канадзавы. Говард Штерн имел коричневый пояс в Сётокане.Нил и Эдриан Рэймент — зловещие белые близнецы в фильме «Матрица. Перезагрузка» являются обладателями второго дана в Японской Ассоциации Каратэ (JKA).Американский актёр Жан-Клод Ван Дамм имеет чёрный пояс в Сётокане. Также Чемпион Европы среди юниоров 1979 года.</p>\n              <p>Талгат Нигматулин — советский актёр, чемпион СССР по каратэ.Писатель Эллестон Тревор получил чёрный пояс по Сётокану в 64 года.Беар Гриллс — британский путешественник, телевизионный ведущий и писатель. Получил чёрный пояс, когда был подростком.Пемба Таманг — Первый неяпонский инструктор в JKA. В прошлом Директор Международного Департамента Мировой Федерации Karatenomichi, основанной Микио Яхара (Mikio Yahara). Президент и Шеф-инструктор NSKF (Nihon Shotokan Karate-do Federation) 8 Дан Карате</p>\n              <p>Лиото Мачида - профессиональный боец ММА, обладатель черного пояса Сетокана. Выиграл несколько любительских турниров по карате, в том числе Пан-Американский турнир по карате в 2001 году</p>\n            </div>\n            <div class=\"about__text-note about__text\">Материал по данным Википедии.</div>",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Ката",
+      "url": "kata",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Кумитэ",
+      "url": "kumite",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Кумите-ката",
+      "url": "kumite-kata",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "Спортивный лагерь каратэ",
+      "url": "sports-camp",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.KarateStaticPage",
+    "fields": {
+      "title": "WKF",
+      "url": "wkf",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/karate/karate-01.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+
+
+
+  {
+    "model": "static_pages.TaekwondoStaticPage",
+    "fields": {
+      "title": "Что такое тхэквондо?",
+      "url": "about",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/taekwondo/thakvondo.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.TaekwondoStaticPage",
+    "fields": {
+      "title": "Тхэквондо",
+      "url": "main",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/taekwondo/thakvondo.jpg",
+      "content": "<div class=\"about__text\">\n              <p class=\"article__lead\">Тхэквондо - это вид современного корейского боевого искусства. тхэквондо - одно из самых популярных восточных единоборств в мире. Официальный статус тхэквондо получило 11 апреля 1955 года.</p>\n              <p>Слово «тхэквондо» буквально означает «искусство ноги и руки». Смысловое значение «тхэквондо» складывается из трёх слов: «тхэ» — подразумевает собой нанесение ударов стопой ноги в прыжке, «квон» — наносящий удар кулак, «до» — путь познания, самосовершенствования, \"искусство\", \"путь\" - путь истины, проторенный в прошлом, покрытый святостью и мудростью . Соединив все вместе, получаем, что слово \"тхэквондо\"-оно обозначает систему духовной тренировки и технику самообороны без оружия, наряду со здоровьем, а также квалифицированным исполнением ударов, блоков и прыжков, выполняющихся голыми руками и ногами для поражения одного или нескольких соперников. Таким образом, в тхэквондо человек получает возможность духовного развития или познания через тэгвон (занятие боевыми искусствами). Это познание может остаться поверхностным или очень глубоким, это будет зависеть от того, как человек будет использовать эту возможность, как интенсивно он будет тренироваться. Однако не следует ожидать от занятий тхэквондо обретения всеобъемлющей мудрости — тхэквондо лишь средство для этого, оно призвано помочь в этом, обеспечивая развитие духовных и физических сил.</p><a class=\"btn  btn--plain about__more\" href=\"{% url 'taekwondo:static-page' 'about' %}\">Подробнее</a>\n            </div>",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.TaekwondoStaticPage",
+    "fields": {
+      "title": "Инструкторы тхэквондо",
+      "url": "instructors",
+      "active": true,
+      "custom_database_query": true,
+      "image": "static-pages/taekwondo/thakvondo.jpg",
+      "content": "-",
+      "sorting": 0
+    }
+  },
+
+
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "История",
+      "url": "history",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/about/about-1.jpg",
+      "content": "<div class=\"hystory-slider__wrapper slider__wrapper\">\n            <div class=\"slider hystory-slider\">\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1989</div><a class=\"hystory-slider__title\" href=\"#\">Турнир</a>\n                  <div class=\"hystory-slider__text\">В 1989 г. уголовная статья была отменена и в СССР вновь можно было заниматься карате открыто. В этом же году в г. Караганде был организован всесоюзный турнир. </div>\n                </div>\n              </div>\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1989</div><a class=\"hystory-slider__title\" href=\"#\">Мечта</a>\n                  <div class=\"hystory-slider__text\">В 1989 году друзья Виктор Хан и Вениамин Пак воплотили в жизнь свою идею и основали каждый у себя в городе спортивный профессиональный клуб каратэ. </div>\n                </div>\n              </div>\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1990</div><a class=\"hystory-slider__title\" href=\"#\">Мировое первенство</a>\n                  <div class=\"hystory-slider__text\">На чемпионате мира в Мексике в 1990 году, сборная CCCР не добилась серьезных успехов, пятилетний запрет на каратэ дал о себе знать.</div>\n                </div>\n              </div>\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1989</div><a class=\"hystory-slider__title\" href=\"#\">Турнир</a>\n                  <div class=\"hystory-slider__text\">В 1989 г. уголовная статься была отменена и в СССР вновь можно было заниматься карате открыто. В этом же году в г. Караганде был организован всесоюзный турнир. </div>\n                </div>\n              </div>\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1989</div><a class=\"hystory-slider__title\" href=\"#\">Мечта</a>\n                  <div class=\"hystory-slider__text\">В 1989 году друзья Виктор Хан и Вениамин Пак воплотили в жизнь свою идею и основали каждый у себя в городе спортивный профессиональный клуб каратэ. </div>\n                </div>\n              </div>\n              <div class=\"hystory-slider__item\">\n                <div class=\"hystory-slider__inner\">\n                  <div class=\"hystory-slider__year\">1990</div><a class=\"hystory-slider__title\" href=\"#\">Мировое первенство</a>\n                  <div class=\"hystory-slider__text\">На чемпионате мира в Мексике в 1990 году, сборная CCCР не добилась серьезных успехов, пятилетний запрет на каратэ дал о себе знать.</div>\n                </div>\n              </div>\n            </div>\n          </div>",
+      "additional_content_left": "<h2 class=\"about__left-title about__text\">Приоритетные направления тренировок</h2>",
+      "additional_content_right": "<p class=\"article__lead\">Идея создания школы каратэ родилась в 1987 году, в то время когда занятия данным видом спорта преследовались статьей уголовного кодекса РСФСР. Основатель клуба \"РАМЕНКИ\" чемпион СССР по каратэ (1983г.) Виктор Хан в годы запрета продолжал повышать свои навыки путем ежедневных тренировок в полуподвальных помещениях общежития на ул. Веденского.</p>\n          <p>В 1989 г. уголовная статься была отменена и в СССР вновь можно было заниматься карате открыто. В этом же году в г. Караганде был организован всесоюзный турнир, с целью определения лучших спортсменов в данном виде единоборств. На данных соревнованиях Виктор Хан одержал победу в двух весовых категориях: до 80 кг и в абсолютной весовой категории. Победители турнира вошли в первую сборную команду СССР по карате, которая должна была впервые представлять Советский союз на мировом первенстве в Мексике в 1990 году, капитаном которой стал Виктор Геннадьевич. На чемпионате мира сборная CCCР не добилась серьезных успехов, пятилетний запрет на каратэ дал о себе знать.</p>\n          <p>Приоритетным направлением тренировок в клубе является изучение и постоянное повышение навыков базовой техники Сетокан каратэ («Кихон»). Поэтому начиная с 2000 года по настоящее время 2 раза в год в «Раменки» приезжает японский мастер Сетокан каратэ высочайшего уровня - Тошиатсу Сасаки (Президент Японской организации каратэ-до Маруошикай (JKMO), Президент федерации каратэ-до Хокайдо, 8 дан JKMO, 8 дан JKF, Официальный эксперт JKF по стилю Сетокан), с целью проведения семинарских занятий для инструкторов СПК «Раменки» и РОО «Союз карате до». Ежегодно Тошастсу Сасаки лично проводит аттестацию по технике Сетокан среди тренеров клуба и ведущих спортсменов, с помощью чего обеспечивается контроль за правильностью изучения традиционной техники, а также постоянный рост навыка всех спортсменов СПК «Раменки». В разделе \"наши воспитанники\" представлены одни из самых успешных наших спортсменов.</p>\n          <p>В 1989 году друзья Виктор Хан и Вениамин Пак (г. Новосибирск, трехкратный чемпион СССР по карате) воплотили в жизнь свою идею и основали каждый у себя в городе спортивный профессиональный клуб каратэ. В г. Москве был основан СПК «Раменки» в г. Новосибирске СПК «Успех» .</p>\n          <p>Вот уже более 25 лет спортивно-профессиональный клуб «Раменки» проповедует здоровый образ жизни через изучение Сетокан Каратэ-До. На сегодняшний наш Клуб один самых больших в г. Москве. Более 1000 человек в возрасте от 5 лет занимаются у нас. Квалифицированный инструкторский состав делиться накопленным опытом со всеми желающими. Наш клуб воспитал чемпионов мира, Европы, многократных чемпионов России и других соревнований различного уровня и масштаба.</p>\n          <h2>Первые ученики клуба</h2>\n          <ul class=\"list-desc list-desc--bullets\">\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Цой Олег</div>\n              <div class=\"list-desc__desc\">6 дан Японской организации каратэ-до Маруошикай (JKMO), Старший тренер сборной команды России по каратэ 1996-2001гг;</div>\n            </li>\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Мартиневский Сергей</div>\n              <div class=\"list-desc__desc\">чемпион России 1995 г. мастер спорта междунородного класса</div>\n            </li>\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Милехина Оксана</div>\n              <div class=\"list-desc__desc\">чемпион России 1995 г. мастер спорта междунородного класса</div>\n            </li>\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Семыкин Юрий</div>\n              <div class=\"list-desc__desc\">чемпион мира, 5 кратный чемпион России 1993-1996, двухкратный обладатель кубка России 1995-1996 года</div>\n            </li>\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Овинов Сергей</div>\n              <div class=\"list-desc__desc\">обладатель кубка России 1995 год</div>\n            </li>\n            <li class=\"list-desc__item\">\n              <div class=\"list-desc__name\">Виндилович Владимир</div>\n              <div class=\"list-desc__desc\">чемпион Москвы</div>\n            </li>\n          </ul>",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "О клубе",
+      "url": "thesis",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/about/thesis.jpg",
+      "content": "<h2>Положение</h2>\n            <h3>О спортивно-проффесиональном клубе “Раменки”</h3>\n            <h2>1. Определение и цели</h2>\n            <p>«СПК РАМЕНКИ» - спортивная организация (далее Клуб) созданная с целью развития спорта, пропаганды здорового образа жизни и популяризации боевых единоборств среди населения на территории Москвы и Российской Федерации.</p>\n            <p>Основная цель Клуба - оздоровление современного поколения и воспитание в нем стремления к ведению здорового образа жизни, а также стремление к высоким спортивным результатам.</p>\n            <h2>2. Принципы</h2>\n            <ul class=\"article__list\">\n              <li>Заниматься спортом в Клубе может любой желающий.</li>\n              <li>Членом Клуба может стать любой желающий, согласный с настоящим Положением.</li>\n              <li>В свою очередь член Клуба Раменки должен:<ul class=\"article__list\">\n                  <li>дорожить своим здоровьем и стремиться не иметь вредных привычек.</li>\n                  <li>уважать и поддерживать своих соклубников, старших товарищей и своих родителей</li>\n                  <li>избегать агрессии, стремиться к спокойствию и доброжелательности o развивать свое тело и укреплять свой дух.</li>\n                </ul>\n              </li>\n            </ul>\n            <h2>3. Основные понятия</h2>\n            <ul class=\"list-desc\">\n              <li class=\"list-desc__item\">\n                <div class=\"list-desc__name\">Член Клуба</div>\n                <div class=\"list-desc__desc\">человек, желающий заниматься спортом, согласный с настоящим положением, имеющий действующий Будо Паспорт спортсмена и зарегистрированный на официальном сайте Клуба www.spk-ramenki.ru в разделе \"Команда Раменки\"</div>\n              </li>\n              <li class=\"list-desc__item\">\n                <div class=\"list-desc__name\">Будо паспорт</div>\n                <div class=\"list-desc__desc\">удостоверение спортсмена, подтверждающее его членство в СПК РАМЕНКИ. Документ содержащий персональные данные владельца, его действующую квалификацию, информацию об его участии на официальных соревнованиях и результаты соревнований. Позволяет принимать участие в открытых голосованиях Клуба.</div>\n              </li>\n              <li class=\"list-desc__item\">\n                <div class=\"list-desc__name\">Соревнования</div>\n                <div class=\"list-desc__desc\">спортивные состязания, на которых спортсмен выступает по собственному желанию, а также с согласия его родителей, в случае если он не достиг совершеннолетия.</div>\n              </li>\n            </ul>\n            <h2>6. Изменения</h2>\n            <p>В настоящее положение могут быть внесены изменения. Предложения по изменению вносятся любым членом Клуба. Предложения предоставляются в Администрацию для рассмотрения. Предложения вносятся после утверждения Президентом Клуба.</p>",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Условия приема",
+      "url": "terms",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/about/thesis.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Этикет Додзе",
+      "url": "dojo",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/about/thesis.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Будо-паспорт",
+      "url": "budo-pass",
+      "active": true,
+      "custom_database_query": false,
+      "image": "static-pages/about/thesis.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Структура клуба",
+      "url": "structure",
+      "active": true,
+      "custom_database_query": true,
+      "image": "static-pages/about/structure.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Ветераны клуба",
+      "url": "legend",
+      "active": true,
+      "custom_database_query": true,
+      "image": "static-pages/about/veterans.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Судейский корпус",
+      "url": "judiciary",
+      "active": true,
+      "custom_database_query": true,
+      "image": "static-pages/about/judge.jpg",
+      "content": "<h3>Обязанности председателя и зам.председателя\n                судейского корпуса:</h3>\n              <ul class=\"article__list\">\n                <li>проведение внутриклубной подготовки на судейские категории и отбор кандидатов в судейский корпус;</li>\n                <li>обеспечение помощи организаторам соревнований в формировании судейского состава на данный турнир;</li>\n              </ul>\n              <h3>Обязанности секретаря:</h3>\n              <ul class=\"article__list\">\n                <li>обработка заявок на турнир;</li>\n                <li>составление регламента турнира согласно заявкам;</li>\n                <li>проведение мандатной комиссии;</li>\n                <li>протоколировать заседания судейского комитета.</li>\n              </ul>",
+      "additional_content_left": "<h2>Деятельность судейского комитета 2017г</h2>\n              <a class=\"download\" href=\"#\"><span class=\"download__text\">Свидетельство о государственной регистрации</span>\n              <div class=\"download__icon\"></div></a>",
+      "additional_content_right": "<div class=\"events\">\n              \n              <div class=\"events__inner\">\n                <div class=\"events__item events__item--date events__header\">Дата</div>\n                <div class=\"events__item events__item--name events__header\">Мероприятие</div>\n                <div class=\"events__item events__item--who events__header\">Кто проводит</div>\n                <div class=\"events__item events__item--note events__header\">Примечание</div>\n                <div class=\"events__item events__item--date\">03.12.2017</div>\n                <div class=\"events__item events__item--name\">Заседание судейской комиссии СК «РАМЕНКИ»</div>\n                <div class=\"events__item events__item--who\">Руководство клуба</div>\n                <div class=\"events__item events__item--note\"></div>\n                <div class=\"events__item events__item--date\">16.03.2017</div>\n                <div class=\"events__item events__item--name\">Внутриклубный обучающий практический семинар для кандидатов на судейство, в ходе которого кандидаты отрабатывали жесты, разбирали различные ситуации возникающие в ходе боя, разбирали теорию.</div>\n                <div class=\"events__item events__item--who\">Манович У.В</div>\n                <div class=\"events__item events__item--note\">На базе филиала №11</div>\n                <div class=\"events__item events__item--date\">18.03.2017</div>\n                <div class=\"events__item events__item--name\">Учебно-аттестационный семинар по кумитэ.</div>\n                <div class=\"events__item events__item--who\">Тимофеев А.А., рефери международной категории, Председатель судейского комитета МФК, член судейского комитета ФКР.</div>\n                <div class=\"events__item events__item--note\">2 человека повысили свою категорию и 9 новых аттестованных судей по кумитэ</div>\n              </div>\n              \n            </div>",
+      "sorting": 0
+    }
+  },
+  {
+    "model": "static_pages.AboutStaticPage",
+    "fields": {
+      "title": "Инструкторы клуба",
+      "url": "instructors",
+      "active": true,
+      "custom_database_query": true,
+      "image": "static-pages/about/instructors.jpg",
+      "content": "-",
+      "additional_content_left": "",
+      "additional_content_right": "",
+      "sorting": 0
+    }
+  }
+]

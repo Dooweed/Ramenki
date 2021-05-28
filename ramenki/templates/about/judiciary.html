@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+<title>{% if page.title_tag %}{{ page.title_tag }}{% else %}{{ page.title }}{% endif %}{{ title_postfix }}</title>
+{% endblock %}
+{% if page.meta_tag %}{% block meta_description %}<meta name="description" content="{{ page.meta_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+{% if page.meta_keywords_tag %}{% block meta_keywords %}<meta name="keywords" content="{{ page.meta_keywords_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+{% if page.meta_robots_tag %}{% block meta_robots %}<meta name="robots" content="{{ page.meta_robots_tag| default_if_none:"" }}">{% endblock %}{% endif %}
+
+{% block main %}
+    {% load cropping %}
+
+  <div class="page-main page-main--about page-main--judge">
+    <section class="page-card article">
+      <div class="article__header">
+        <div class="article__header-inner">
+          <div class="page-title article__title">
+            <div class="title-add"><span>О клубе</span></div>
+            <div class="title  title--rich">
+              <h1>{{ page.title }}</h1>
+            </div>
+          </div>
+          <div class="article__subject">{{ page.title }}</div>
+          <div class="article__slogan">Нашей целью является
+            воспитание порядочных, достойных
+            и добрых людей</div>
+          <div class="article__img"><img src="{{ page.image.url }}" alt=""></div>
+        </div>
+        <div class="about-nav" id="about-nav"><button class="btn  btn--arrow-down-red about-nav__toggle nav-toggle" data-target-id="about-nav" data-target-class-toggle="about-nav--open">{{ page.title }}</button>
+          <div class="about-nav__inner">
+            <ul class="inner-nav inner-nav__list">
+                {% for item in subdivisions_list %}
+                    {% if item.id == page.id %}
+                        <li class="inner-nav__item inner-nav__item--active"><span class="inner-nav__link">{{ item.title }}</span></li>
+                    {% else %}
+                        <li class="inner-nav__item"><a class="inner-nav__link" href="{% if item.url %}{% url 'about:static-page' item.url %}{% else %}{% url 'taekwondo:main' %}{% endif %}">{{ item.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="social  social--about-menu">
+              <div class="social__inner">
+                <li class="social__link-wrap  social__link-wrap--fb-black"><a class="social__link" href="{{ facebook_link }}"><span>Фейсбук</span></a></li>
+                <li class="social__link-wrap  social__link-wrap--vk-black"><a class="social__link" href="{{ vk_link }}"><span>В контакте</span></a></li>
+                <li class="social__link-wrap  social__link-wrap--insta-black"><a class="social__link" href="{{ instagram_link }}"><span>Инстаграм</span></a></li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="about__main">
+        <div class="about__section">
+          <div class="about__right">
+            <p class="article__lead about__text">В клубе сформирован судейский корпус, который входит в состав Московской Федерации каратэ и подчиняется судейскому комитету Федерации России.</p>
+            <div class="article__cards">
+                {% for item in judiciary %}
+              <div class="person  {{ item.color_class }} person--flag">
+                <div class="person__inner">
+                  <div class="person__header">
+                    <div class="person__img"></div>
+                    <div class="person__caption">
+                      <div class="person__name">{{ item.name }}</div>
+                      <div class="person__position">{{ item.short_description }}</div>
+                    </div>
+                  </div>
+                  <ul class="person__title-list">
+                      {% if item.merits %}<li class="person__title-item">{{ item.merits| safe }}</li>{% endif %}
+                  </ul><button class="btn  btn--plain person__more" data-custom-open="modal-person-{{ item.id }}">Подробнее</button>
+                </div>
+              </div>
+                {% endfor %}
+            </div>
+          {% if page.content %}
+            <div class="about__text">
+
+              {{ page.content| safe }}
+
+            </div>
+          {% endif %}
+          </div>
+        </div>
+      {% if page.additional_content_left or page.additional_content_right %}
+        <div class="about__section">
+            {% if page.additional_content_left %}
+          <div class="about__left about__text">
+
+              {{ page.additional_content_left| safe }}
+
+          </div>
+            {% endif %}
+            {% if page.additional_content_right %}
+          <div class="about__right about__text">
+
+              {{ page.additional_content_right| safe }}
+
+          </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      </div>
+    </section>
+    {% if news %}
+<section class="page-card page-card--thumbs-line page-card--news-line">
+  <div class="headline"><span>новости</span> клуба</div>
+  <section class="news-widget">
+    <ul class="news-widget__list">
+        {% for article in news %}
+            <li class="news-widget__item news-item"><a class="news-item__inner" href="{% url 'news:article' article.url %}">
+              <div class="news-item__date">{{ article.date_string }}</div>
+              <div class="news-item__title">{{ article.title }}</div>
+            </a></li>
+        {% endfor %}
+    </ul>
+  </section>
+</section>
+    {% endif %}
+  </div>
+{% endblock %}
+{% block additional %}
+  {% for item in judiciary %}
+  <div class="modal" id="modal-person-{{ item.id }}" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="1" data-custom-close="">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-{{ item.id }}-title">
+        <div class="modal__content"><button class="btn modal__close" aria-label="Close modal" data-custom-close=""></button>
+          <div class="person-modal person">
+            <div class="person-modal__type">Ветеран</div>
+            <div class="person-modal__inner">
+              <div class="person-modal__img">{% if item.has_photo %}<img src="{% cropped_thumbnail item "photo_profile" %}" alt="" />{% else %}<img src="{% static 'img/person-empty-large.png' %}" alt="" />{% endif %}</div>
+              <div class="person-modal__col">
+                <div class="person-modal__name">{{ item.name }}</div>
+                <div class="person-modal__position">{{ item.verbose_position }}</div>
+                <div class="person__data">
+                  <div class="person__data-item">
+                    <div class="person__data-name">Вид спорта:</div>
+                    <div class="person__data-val">{{ item.verbose_sports_kinds }}</div>
+                  </div>
+                {% if item.age %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Возраст:</div>
+                    <div class="person__data-val">{{ item.age }}</div>
+                  </div>
+                {% endif %}
+                {% if item.get_qualification_display %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Квалификация:</div>
+                    <div class="person__data-val">{{ item.get_qualification_display }}</div>
+                  </div>
+                {% endif %}
+                    {% if item.started_trainings %}
+                  <div class="person__data-item">
+                    <div class="person__data-name">Год начала занятий:</div>
+                    <div class="person__data-val">{{ item.started_trainings }}</div>
+                  </div>
+                    {% endif %}
+                </div>
+              </div>
+              <div class="person-modal__col-wide">
+                <div class="person__title-list">
+                    {% if item.additional_information %}
+                  {{ item.additional_information| safe }}
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+{% endblock %}

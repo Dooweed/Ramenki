@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+  <div class="page-main page-main--auth">
+    <div class="auth">
+      <div class="auth__enter">
+        <form action="{% url 'auth:login' %}" method="POST" class="enter">
+            {% csrf_token %}
+          <div class="auth__title">Войти в личный кабинет</div>
+            {{ login_form.non_field_errors }}
+            {% if login_form.login_failed %}<p style="color: #F50808;">Не удалось войти. Введён неверный Email адрес или пароль.</p>{% endif %}
+          <div class="auth__fields">
+              <label class="field-text  field-text--login field-text--auth auth__field {% if login_form.email.errors %}field-text--error{% endif %}">
+                  <span class="field-text__name">Email</span>
+                  <span class="field-text__input-wrap">
+                      {{ login_form.email }}
+                  </span><span class="field-text__help-text">{{ login_form.email.errors.as_text }}</span>
+              </label>
+              <label class="field-text  field-text--password field-text--auth auth__field {% if login_form.password.errors %}field-text--error{% endif %}">
+                  <span class="field-text__name">Пароль</span>
+                  <span class="field-text__input-wrap">
+                      {{ login_form.password }}
+                      <p style="padding-top: 8px; text-align: right;"><a style="font-weight: 700" href='{% url 'auth:password-reset' %}'>Я забыл пароль</a></p>
+                  </span><span class="field-text__help-text">{{ login_form.password.errors.as_text }}</span>
+              </label>
+          </div>
+            <button class="btn  btn--plain btn--white enter__submit" type="submit">Войти</button>
+          <div class="auth__social"><span class="auth__social-text">Войти через соцсети</span>
+            <ul class="social">
+              <div class="social__inner">
+{#                <li class="social__link-wrap  social__link-wrap--fb"><a class="social__link" href="{% url "social:begin" backend="facebook" %}"><span>Фейсбук</span></a></li>#}
+                <li class="social__link-wrap  social__link-wrap--vk"><a class="social__link" href="{% url "social:begin" backend="vk-oauth2" %}"><span>В контакте</span></a></li>
+{#                <li class="social__link-wrap  social__link-wrap--ok"><a class="social__link" href="{% url "social:begin" backend="ok-oauth2" %}"><span>Одноклассники</span></a></li>#}
+              </div>
+            </ul>
+          </div>
+        </form>
+      </div>
+      <div class="auth__register">
+        <form action="{% url 'auth:register' %}" method="POST" class="register">
+            {% csrf_token %}
+          <div class="auth__title">Зарегистрироваться</div>
+            {{ register_form.non_field_errors }}
+            <label class="field-text  field-text--name field-text--auth field-text--register auth__field">
+                <span class="field-text__name">Имя</span>
+                <span class="field-text__input-wrap">
+                    {{ register_form.forename }}
+                </span><span>{{ register_form.forename.errors.as_text }}</span>
+            </label>
+            <label class="field-text  field-text--sirname field-text--auth field-text--register auth__field">
+                <span class="field-text__name">Фамилия</span>
+                <span class="field-text__input-wrap">
+                    {{ register_form.surname }}
+                </span><span>{{ register_form.surname.errors.as_text }}</span>
+            </label>
+            <label class="field-text  field-text--email field-text--auth field-text--register auth__field">
+                <span class="field-text__name">email</span>
+                <span class="field-text__input-wrap">
+                    {{ register_form.email }}
+                </span><span>{{ register_form.email.errors.as_text }}</span>
+            </label>
+            <label class="field-text  field-text--phone field-text--auth field-text--register auth__field">
+                <span class="field-text__name">Телефон</span>
+                <span class="field-text__input-wrap">
+                    {{ register_form.phone }}
+                </span><span>{{ register_form.phone.errors.as_text }}</span>
+            </label>
+            <label class="field-text  field-text--password field-text--auth field-text--register auth__field">
+                <span class="field-text__name">Пароль</span>
+                <span class="field-text__input-wrap">
+                    {{ register_form.password }}
+                </span><span>{{ register_form.password.errors.as_text }}</span>
+            </label>
+{#          <div class="field-checkbox auth__user-content">#}
+{#            <div class="field-checkbox__input-wrap  field-checkbox__input-wrap--auth">#}
+{#                <label class="field-checkbox__name"><input class="field-checkbox__input" type="checkbox" name="user-consent" />#}
+{#                    <span class="field-checkbox__name-text">Принимаю <a href='#'>правила обработки</a> персональных данных</span>#}
+{#                </label>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="auth__docs">#}
+{#              <a class="download  download--dark" href="#"><span class="download__text">Положение о членстве в ОСОО «Федерация каратэ России»</span><div class="download__icon"></div></a>#}
+{#              <a class="download  download--dark" href="#"><span class="download__text">Положение о судейском комитете</span><div class="download__icon"></div></a>#}
+{#              <a class="download  download--dark" href="#"><span class="download__text">Свидетельство о государственной регистрации</span><div class="download__icon"></div></a>#}
+{#          </div>#}
+{#          <div class="register__load-doc">#}
+{#            <div class="register_load-lbl-wrp">#}
+{#                <label class="btn btn--plain btn--arrow-right-after register__load-lbl" for="load-doc">Загрузить документ</label>#}
+{#                <span class="register__load-note">Загрузите личное фото, паспортные данные, медицинскую справку и т.д</span>#}
+{#            </div>#}
+{#              <template class="loaded-file-template">#}
+{#                  <a class="download  download--dark" href="#">#}
+{#                  <span class="download__text">Template text</span>#}
+{#                <div class="download__icon"></div>#}
+{#                  <input class="register__loaded-input" type="file" />#}
+{#                  </a>#}
+{#              </template>#}
+{#          </div>#}
+            <button class="btn  btn--plain register__submit" type="submit">Зарегистрироваться</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

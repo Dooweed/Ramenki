@@ -1,0 +1,65 @@
+[
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Youtube",
+      "description": "Общая ссылка на Ютуб канал",
+      "key": "YOUTUBE_LINK",
+      "value": "https://www.youtube.com/channel/UCWmsdjrLCn6bv8KJDEOCslw"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Instagram",
+      "description": "Общая ссылка на страницу в Инстаграме",
+      "key": "INSTAGRAM_LINK",
+      "value": "https://www.instagram.com/ramenki/?hl=ru"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Facebook",
+      "description": "Общая ссылка на страницу в Фейсбуке",
+      "key": "FACEBOOK_LINK",
+      "value": "https://www.facebook.com/groups/Ramenki"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Вконтакте",
+      "description": "Общая ссылка на страницу в Вконтакте",
+      "key": "VK_LINK",
+      "value": "https://vk.com/ramenki28"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Телефон",
+      "description": "Телефонный номер, который отображается на всех страницах",
+      "key": "PHONE",
+      "value": "+74957246171"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Город",
+      "description": "Название города под телефонным номером",
+      "key": "PHONE_CITY",
+      "value": "Москва"
+    }
+  },
+  {
+    "model": "other.Settings",
+    "fields": {
+      "name": "Почта",
+      "description": "Адрес эл. почты, который отображается на всех страницах",
+      "key": "EMAIL",
+      "value": "randommail@gmail.com"
+    }
+  }
+]

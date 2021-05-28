@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header_links %}
+    <link rel="stylesheet" href="{% static 'css/personal_area.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <div class="page-main page-main--personal">
+
+    <section class="page-card">
+
+        <div class="page-title">
+            <div class="title-add"><span>личный кабинет</span></div>
+            <div class="title  title--rich">
+                <h1>{{ profile.name }}</h1>
+            </div>
+        </div>
+
+        <div class="page-card page-card__content">
+
+            <div class="edit-button">
+                <a href="{% url 'auth:logout' %}" class="btn  btn--plain address__show-all">Выйти</a>
+                <a href="{% url 'auth:profile-edit' %}" class="btn  btn--plain address__show-all">Редактировать профиль</a>
+                {% if user.has_usable_password %}
+                    <a href="{% url 'auth:password-change' %}" class="btn  btn--plain address__show-all">Сменить пароль</a>
+                {% else %}
+                    <a href="{% url 'auth:password-set' %}" class="btn  btn--plain address__show-all">Создать пароль</a>
+                {% endif %}
+            </div>
+
+            <div class="page-card__inner">
+
+                <div class="info-card info-card__image">
+                    <div class="info-card__inner info-card__inner-image">
+                        <div class="info-card__image">
+                            <img src="{% if profile.use_social_photo and profile.social_photo %}{{ profile.social_photo }}{% else %}{{ profile.photo.url }}{% endif %}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="table info-card__inner info-card__inner-table">
+                        <div class="row table__row"><p class="row__item row__item-title">Фамилия</p><p class="row__item row__item-value">{{ profile.user.surname| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Имя</p><p class="row__item row__item-value">{{ profile.user.forename| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Отчество</p><p class="row__item row__item-value">{{ profile.patronymic| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Возраст</p><p class="row__item row__item-value">{{ profile.age_and_date| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Будо пасспорт</p><p class="row__item row__item-value">{{ profile.budo_pass| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Телефон</p><p class="row__item row__item-value">{{ profile.user.phone| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Email</p><p class="row__item row__item-value">{{ profile.user.email| default:"-" }}</p></div><div class="divisor"></div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="table info-card__inner info-card__inner-table">
+                        <div class="row table__row"><p class="row__item row__item-title">Тренер</p><p class="row__item row__item-value">{{ profile.coach.name| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Филиал</p><p class="row__item row__item-value">{{ profile.coach.branch.title| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Квалификация</p><p class="row__item row__item-value">{{ profile.qualification| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Вконтакте</p><p class="row__item row__item-value">{{ profile.vkontakte_link| default:"-"| safe }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Инстаграм</p><p class="row__item row__item-value">{{ profile.instagram_link| default:"-"| safe }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Фейсбук</p><p class="row__item row__item-value">{{ profile.facebook_link| default:"-" }}</p></div><div class="divisor"></div>
+                        <div class="row table__row"><p class="row__item row__item-title">Одноклассники</p><p class="row__item row__item-value">{{ profile.odnoklassniki_link| default:"-"| safe }}</p></div><div class="divisor"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    </div>
+
+{% endblock %}
